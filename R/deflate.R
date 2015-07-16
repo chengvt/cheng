@@ -1,3 +1,7 @@
+#' Deflate
+#' 
+#' Deflate
+#' 
 #' @param x object
 #' @param n number of rows per subset to average
 #' @param process processing method. Available option: none, average, std

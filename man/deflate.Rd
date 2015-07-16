@@ -2,6 +2,7 @@
 % Please edit documentation in R/deflate.R
 \name{deflate}
 \alias{deflate}
+\title{Deflate}
 \usage{
 deflate(x, n, ...)
 }
@@ -17,5 +18,8 @@ deflate(x, n, ...)
 \item{sdigits}{significant figures}
 
 \item{FUN}{function}
+}
+\description{
+Deflate
 }
 
