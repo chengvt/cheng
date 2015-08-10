@@ -4,8 +4,9 @@
 \alias{addstats}
 \title{Add stats of the model to the plot}
 \usage{
-addstats(model, ncomp = length(model$ncomp), estimate = "test",
-  location = "bottomright", show = c("ncomp", "R2", "RMSE"), round = 2)
+addstats(model, ncomp = length(model$ncomp), estimate = "train",
+  location = "bottomright", show = c("ncomp", "R2", "RMSE"), round = 2,
+  newx = NULL, newy = NULL)
 }
 \arguments{
 \item{model}{object of class `mvr`}
@@ -13,12 +14,18 @@ addstats(model, ncomp = length(model$ncomp), estimate = "test",
 \item{ncomp}{a vector of positive integers.  The components or number
     of components to use.  See below.}
 
-\item{estimate}{a character vector.  Which estimators to use.
-    Should be a subset of \code{c("all", "train", "CV", "adjCV",
-      "test")}.  \code{"adjCV"} is only available for (R)MSEP.  See
-    below for how the estimators are chosen.}
+\item{estimate}{can be "train", "CV" or "test". In case of "test",
+newdata must be provided.}
 
 \item{location}{location of legend on graph. Look up legend for more details.}
+
+\item{show}{choose variables to show in the plot}
+
+\item{round}{number of digits to round}
+
+\item{newx}{predictors for test group}
+
+\item{newy}{measured value for test group}
 }
 \description{
 Add stats of the model to the plot

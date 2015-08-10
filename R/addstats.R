@@ -2,20 +2,34 @@
 #' 
 #' Add stats of the model to the plot
 #' 
-#' @inheritParams pls:::R2
 #' @param model object of class `mvr`
 #' @param location location of legend on graph. Look up legend for more details.
+#' @param estimate can be "train", "CV" or "test". In case of "test", 
+#' newdata must be provided.
+#' @param show choose variables to show in the plot
+#' @param round number of digits to round
+#' @param newx predictors for test group
+#' @param newy measured value for test group
+#' @inheritParams pls:::R2
 #' @export
 
 addstats <- function(model, ncomp = length(model$ncomp), 
-                     estimate = "test",
+                     estimate = "train",
                      location = "bottomright",
                      show = c("ncomp", "R2", "RMSE"),
-                     round = 2){
+                     round = 2, newx = NULL, newy = NULL){
     
     ## get stats
-    R2 <- R2(model, estimate = estimate)$val[1,1,ncomp+1]
-    RMSE <- RMSEP(model, estimate = estimate)$val[1,1,ncomp+1]
+    if (estimate %in% "test"){
+        predicted <- drop(predict(model, ncomp, newdata = newx))
+        fit <- lm(predicted ~ newy)
+        R2 <- summary(fit)$r.squared
+        RMSE <- sqrt(sum((predicted - newy) ^ 2) / length(predicted))
+        #RPD <- sd(newy)/RMSE
+    } else {
+        R2 <- R2(model, estimate = estimate)$val[1,1,ncomp+1]
+        RMSE <- RMSEP(model, estimate = estimate)$val[1,1,ncomp+1]
+    }
     
     ## arrange stats
     stats <- list()
