@@ -4,19 +4,57 @@
 #' 
 #' @inheritParams pls:::R2
 #' @param model object of class `mvr`
-#' @param legendlocation location of legend on graph. Look up legend for more details.
+#' @param location location of legend on graph. Look up legend for more details.
 #' @export
 
 addstats <- function(model, ncomp = length(model$ncomp), 
-                     estimate = "CV",
-                     legendlocation = "bottomright",
-                     show = c("R2", "RMSECV", "RMSEC")){
+                     estimate = "test",
+                     location = "bottomright",
+                     show = c("ncomp", "R2", "RMSE"),
+                     round = 2){
+    
+    ## get stats
+    R2 <- R2(model, estimate = estimate)$val[1,1,ncomp+1]
+    RMSE <- RMSEP(model, estimate = estimate)$val[1,1,ncomp+1]
+    
+    ## arrange stats
+    stats <- list()
+    for (i in 1:length(show)){
+        stats[i] <- get(show[i])
+        names(stats)[i] <- show[i]
+    }
+    
+    ## round to significant figure
+    stats <- lapply(stats, round, digits = round)
 
-    R2 <- round(R2(model, estimate = "train")$val[1,1,ncomp+1], 3)
-    leg <- c(as.expression(bquote(ncomp == .(ncomp))),
-             as.expression(bquote(italic(R)^2 == .(R2))),
-             as.expression(bquote(italic(RMSECV) == .(round(RMSEP(model)$val[1,1,ncomp+1], 2)))),
-             as.expression(bquote(italic(RMSEC) == .(round(RMSEP(model, estimate = "train")$val[1,1,ncomp+1], 2))))
-             )
-    legend(legendlocation, legend = leg, bty = "n")
+    ## format naming
+    # R2
+    index <- which((names(stats) %in% "R2"))
+    if (estimate %in% "train") {
+        names(stats)[index] <- paste0("italic(", names(stats)[index], ")", "*italic(C)") # C for calibration
+    } else if (estimate %in% "test") {
+        names(stats)[index] <- paste0("italic(", names(stats)[index], ")", "*italic(P)") # P for prediction
+    } else if (estimate %in% "CV") {
+        names(stats)[index] <- paste0("italic(", names(stats)[index], ")", "*italic(CV)") 
+        
+    }
+    # RMSE
+    index <- which((names(stats) %in% "RMSE"))
+    if (estimate %in% "train") {
+        names(stats)[index] <- paste0("italic(", names(stats)[index], "C)") # C for calibration
+    } else if (estimate %in% "test") {
+        names(stats)[index] <- paste0("italic(", names(stats)[index], "P)") # P for prediction
+    } else if (estimate %in% "CV") {
+        names(stats)[index] <- paste0("italic(", names(stats)[index], "CV)") 
+    }
+    
+    ## superscript 2
+    names(stats) <- sub("R2)", "R)^2", names(stats))
+    
+    ## add legend
+    leg <- c(parse(text = paste(bquote(.(names(stats)[1])), "==", bquote(.(stats[[1]])))),
+             if (length(stats) > 1) parse(text = paste(bquote(.(names(stats)[2])), "==", bquote(.(stats[[2]])))),
+             if (length(stats) > 2) parse(text = paste(bquote(.(names(stats)[3])), "==", bquote(.(stats[[3]])))))
+         
+    legend(location, legend = leg, bty = "n")
 }

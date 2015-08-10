@@ -4,8 +4,8 @@
 \alias{addstats}
 \title{Add stats of the model to the plot}
 \usage{
-addstats(model, ncomp = length(model$ncomp), estimate = "CV",
-  legendlocation = "bottomright", show = c("R2", "RMSECV", "RMSEC"))
+addstats(model, ncomp = length(model$ncomp), estimate = "test",
+  location = "bottomright", show = c("ncomp", "R2", "RMSE"), round = 2)
 }
 \arguments{
 \item{model}{object of class `mvr`}
@@ -18,7 +18,7 @@ addstats(model, ncomp = length(model$ncomp), estimate = "CV",
       "test")}.  \code{"adjCV"} is only available for (R)MSEP.  See
     below for how the estimators are chosen.}
 
-\item{legendlocation}{location of legend on graph. Look up legend for more details.}
+\item{location}{location of legend on graph. Look up legend for more details.}
 }
 \description{
 Add stats of the model to the plot
