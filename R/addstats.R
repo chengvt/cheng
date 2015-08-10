@@ -12,12 +12,14 @@
 #' @param newy measured value for test group
 #' @inheritParams pls:::R2
 #' @export
+#' @import pls
 
 addstats <- function(model, ncomp = length(model$ncomp), 
                      estimate = "train",
                      location = "bottomright",
                      show = c("ncomp", "R2", "RMSE"),
-                     round = 2, newx = NULL, newy = NULL){
+                     round = 2, newx = NULL, newy = NULL,
+                     fitline = TRUE){
     
     ## get stats
     if (estimate %in% "test"){
@@ -25,10 +27,14 @@ addstats <- function(model, ncomp = length(model$ncomp),
         fit <- lm(predicted ~ newy)
         R2 <- summary(fit)$r.squared
         RMSE <- sqrt(sum((predicted - newy) ^ 2) / length(predicted))
-        #RPD <- sd(newy)/RMSE
+        RPD <- sd(newy) / RMSE
     } else {
         R2 <- R2(model, estimate = estimate)$val[1,1,ncomp+1]
         RMSE <- RMSEP(model, estimate = estimate)$val[1,1,ncomp+1]
+        measured <- model.response(model.frame(model))
+        predicted <- predict(model)
+        fit <- lm(predicted ~ measured)
+        RPD <- sd(measured) / RMSE
     }
     
     ## arrange stats
@@ -71,4 +77,7 @@ addstats <- function(model, ncomp = length(model$ncomp),
              if (length(stats) > 2) parse(text = paste(bquote(.(names(stats)[3])), "==", bquote(.(stats[[3]])))))
          
     legend(location, legend = leg, bty = "n")
+    
+    ## add fit line
+    if (fitline) abline(a = coef(fit)[1], b = coef(fit)[2], lty = "dashed")
 }
