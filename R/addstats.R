@@ -14,7 +14,7 @@
 #' @export
 #' @import pls
 
-addstats <- function(model, ncomp = length(model$ncomp), 
+addstats <- function(model, ncomp = model$ncomp, 
                      estimate = "train",
                      location = "bottomright",
                      show = c("ncomp", "R2", "RMSE"),

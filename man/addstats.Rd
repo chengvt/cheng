@@ -4,7 +4,7 @@
 \alias{addstats}
 \title{Add stats of the model to the plot}
 \usage{
-addstats(model, ncomp = length(model$ncomp), estimate = "train",
+addstats(model, ncomp = model$ncomp, estimate = "train",
   location = "bottomright", show = c("ncomp", "R2", "RMSE"), round = 2,
   newx = NULL, newy = NULL, fitline = TRUE)
 }
