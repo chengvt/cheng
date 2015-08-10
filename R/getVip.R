@@ -1,5 +1,5 @@
 #' @export
-getVip <- function(x) {
+getVIP <- function(x) {
     
     # extract information
     if (class(x) == "mvr") {
