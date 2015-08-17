@@ -32,7 +32,7 @@ addstats <- function(model, ncomp = model$ncomp,
         R2 <- R2(model, estimate = estimate)$val[1,1,ncomp+1]
         RMSE <- RMSEP(model, estimate = estimate)$val[1,1,ncomp+1]
         measured <- model.response(model.frame(model))
-        predicted <- predict(model)
+        predicted <- predict(model)[,1,ncomp]
         fit <- lm(predicted ~ measured)
         RPD <- sd(measured) / RMSE
     }
