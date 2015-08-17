@@ -22,7 +22,7 @@
 pickSpec <- function(EEM, n){
     drawEEM(EEM, n)
     cat("Please click on the plot to determine the point location.")
-    point <- locator(n = n)
+    point <- locator(n = n) # big problem now is that locator cannot be used with filled.contour. So locator() must be solved first
     EX <- point$x
     EM <- point$y
     
