@@ -31,7 +31,7 @@ addstats <- function(model, ncomp = model$ncomp,
     } else {
         R2 <- R2(model, estimate = estimate)$val[1,1,ncomp+1]
         RMSE <- RMSEP(model, estimate = estimate)$val[1,1,ncomp+1]
-        measured <- model.response(model.frame(model))
+        measured <- as.numeric(model.response(model.frame(model)))
         if (estimate %in% "train") predicted <- model$fitted.values[,,ncomp, drop = TRUE]
         if (estimate %in% "CV") predicted <- model$validation$pred[,,ncomp, drop = TRUE]
         fit <- lm(predicted ~ measured)
