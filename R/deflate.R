@@ -13,7 +13,7 @@
 deflate <- function(x, n, ...){
     UseMethod("deflate", x)
 }
-
+#' @describeIn deflate for matrix
 #' @export
 deflate.matrix <- function(x, n, process = "average", sdigits = 2, rowname = NULL){
 
@@ -47,6 +47,7 @@ deflate.matrix <- function(x, n, process = "average", sdigits = 2, rowname = NUL
 
 }
 
+#' @describeIn deflate for character
 #' @export
 deflate.character <- function(x, n, FUN, ...){
     

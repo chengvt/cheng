@@ -2,9 +2,16 @@
 % Please edit documentation in R/deflate.R
 \name{deflate}
 \alias{deflate}
+\alias{deflate.character}
+\alias{deflate.matrix}
 \title{Deflate}
 \usage{
 deflate(x, n, ...)
+
+\method{deflate}{matrix}(x, n, process = "average", sdigits = 2,
+  rowname = NULL)
+
+\method{deflate}{character}(x, n, FUN, ...)
 }
 \arguments{
 \item{x}{object}
@@ -22,4 +29,10 @@ deflate(x, n, ...)
 \description{
 Deflate
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{matrix}: for matrix
+
+\item \code{character}: for character
+}}
 
