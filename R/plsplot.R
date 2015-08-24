@@ -21,7 +21,7 @@ plsplot <- function(model, ncomp = model$ncomp,
                  newy = newy, fitline = fitline, cex = cex.stats)
     } else if (estimate %in% "test"){
         predicted <- drop(predict(model, ncomp, newdata = newx))
-        plot(newy, predicted, xlab = "measured", ...)
+        plot(newy, predicted, ...)
         addstats(model, ncomp = ncomp, 
                  estimate = estimate, location = location,
                  show = show, round = round, newx = newx, 
