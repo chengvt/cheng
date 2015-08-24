@@ -8,13 +8,13 @@ plsplot <- function(model, ncomp = model$ncomp,
                     fitline = TRUE, cex.stats = 1, ...){
     if (!(is.null(newx) & is.null(newy))) estimate = "test"
     if (estimate %in% "train"){
-        predplot(model, which = estimate, ...)
+        predplot(model, ncomp = ncomp, which = estimate, ...)
         addstats(model, ncomp = ncomp, 
                  estimate = estimate, location = location,
                  show = show, round = round, newx = newx, 
                  newy = newy, fitline = fitline, cex = cex.stats)
     } else if (estimate %in% "CV"){
-        predplot(model, which = "validation", ...)
+        predplot(model, ncomp = ncomp, which = "validation", ...)
         addstats(model, ncomp = ncomp, 
                  estimate = estimate, location = location,
                  show = show, round = round, newx = newx, 
