@@ -20,7 +20,7 @@ addstats <- function(model, ncomp = model$ncomp,
                      location = "bottomright",
                      show = c("ncomp", "R2", "RMSE"),
                      round = 2, newx = NULL, newy = NULL,
-                     fitline = TRUE){
+                     fitline = TRUE, ...){
     
     ## get stats
     if (estimate %in% "test"){

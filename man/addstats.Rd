@@ -6,7 +6,7 @@
 \usage{
 addstats(model, ncomp = model$ncomp, estimate = "train",
   location = "bottomright", show = c("ncomp", "R2", "RMSE"), round = 2,
-  newx = NULL, newy = NULL, fitline = TRUE)
+  newx = NULL, newy = NULL, fitline = TRUE, ...)
 }
 \arguments{
 \item{model}{object of class `mvr`}
