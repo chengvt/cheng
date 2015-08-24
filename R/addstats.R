@@ -10,6 +10,7 @@
 #' @param round number of digits to round
 #' @param newx predictors for test group
 #' @param newy measured value for test group
+#' @param ... additional arguments for \code{\link{legend}}
 #' @inheritParams pls:::R2
 #' @export
 #' @import pls
@@ -77,7 +78,7 @@ addstats <- function(model, ncomp = model$ncomp,
              if (length(stats) > 1) parse(text = paste(bquote(.(names(stats)[2])), "==", bquote(.(stats[[2]])))),
              if (length(stats) > 2) parse(text = paste(bquote(.(names(stats)[3])), "==", bquote(.(stats[[3]])))))
          
-    legend(location, legend = leg, bty = "n")
+    legend(location, legend = leg, bty = "n", ...)
     
     ## add fit line
     if (fitline) abline(a = coef(fit)[1], b = coef(fit)[2], lty = "dashed")

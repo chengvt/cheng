@@ -26,6 +26,8 @@ newdata must be provided.}
 \item{newx}{predictors for test group}
 
 \item{newy}{measured value for test group}
+
+\item{...}{additional arguments for \code{\link{legend}}}
 }
 \description{
 Add stats of the model to the plot
