@@ -1,10 +1,11 @@
 Package: cheng
 Type: Package
-Title: for cheng
+Title: A package
 Version: 0.1.0
 Date: 2015-07-16
-Author: cheng
-Description: for cheng
+Author: chengvt
+Maintainer: chengvt <vipavee.tri@gmail.com>
+Description: A package
 Imports:
 	pls,
 	EEM

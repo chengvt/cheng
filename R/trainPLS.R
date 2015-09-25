@@ -4,7 +4,7 @@
 #' However, the number of latent variables has to be determined manually. Planning to add variable reduction in the future. 
 #' 
 #' @param cvsegments refer to mvrCv's segments argument
-#' @import pls cheng
+#' @import pls
 #' @export
 trainPLS <- function(x, y, newx = NULL, newy = NULL, maxncomp = 20, cvsegments = 10, round = 2){
     
