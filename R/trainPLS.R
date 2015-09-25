@@ -4,10 +4,11 @@
 #' However, the number of latent variables has to be determined manually. Planning to add variable reduction in the future. 
 #' 
 #' @param cvsegments refer to mvrCv's segments argument
+#' @param fixedncomp fixed numerical value
 #' @import pls
 #' @export
 trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, 
-                     round = 2, reduceVar = FALSE, cycles = 1){
+                     round = 2, reduceVar = FALSE, cycles = 1, fixedncomp = NULL){
     
     ## set up
     result_list <- list()
@@ -18,7 +19,9 @@ trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10,
         plot(model, ncomp = 1:maxncomp, plottype = "validation", type = "b", main = paste("Model", r), cex.lab = 1.3, ylab = "RMSECV", legendpos = "topright") 
         # problem! gotta find a find-knee function for this to work. Let's do manual selection for now
         cat("Model", r, ": ")
-        ncomp <- as.numeric(readline("Select ncomp: "))
+        if (is.null(fixedncomp)) {
+            ncomp <- as.numeric(readline("Select ncomp: "))
+        } else ncomp <- fixedncomp
         localresult <- data.frame(preprocessing = pre,                     
                                   nvar = dim(model$model[[2]])[2],                      
                                   ncomp = ncomp,                                         
@@ -53,7 +56,7 @@ trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10,
     ## variable reduction
     if (reduceVar){
         
-        if (!exists("VIP")) call_VIP
+        if (!exists("VIP")) call_VIP()
 
         for (cycle in 1:cycles){
             
