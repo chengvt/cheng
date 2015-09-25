@@ -1,4 +1,3 @@
 #' @export
-call_VIP <- function(model){
-    source("http://mevik.net/work/software/VIP.R")
+call_VIP <- source("http://mevik.net/work/software/VIP.R")
 }
