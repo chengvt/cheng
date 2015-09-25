@@ -4,8 +4,8 @@
 \alias{trainPLS}
 \title{Train PLS for train dataset by cross-validation}
 \usage{
-trainPLS(x, y, newx = NULL, newy = NULL, maxncomp = 20, cvsegments = 10,
-  round = 2)
+trainPLS(x, y, maxncomp = 20, cvsegments = 10, round = 2,
+  reduceVar = FALSE, cycles = 1)
 }
 \arguments{
 \item{cvsegments}{refer to mvrCv's segments argument}

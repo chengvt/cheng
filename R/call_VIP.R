@@ -1,5 +1,4 @@
 #' @export
-vip <- function(model){
+call_VIP <- function(model){
     source("http://mevik.net/work/software/VIP.R")
-    return(VIP(model))
 }

@@ -6,56 +6,94 @@
 #' @param cvsegments refer to mvrCv's segments argument
 #' @import pls
 #' @export
-trainPLS <- function(x, y, newx = NULL, newy = NULL, maxncomp = 20, cvsegments = 10, round = 2){
+trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, 
+                     round = 2, reduceVar = FALSE, cycles = 1){
     
-    # matrix output
-    result <- matrix(rep(NA, 15), 3, 5)
-    rownames(result) <- c("Mean-centering", "Norm + Mean-centering", "Autoscale")
-    colnames(result) <- c("ncomp", "R2C", "RMSEC", "R2CV", "RMSECV")
+    ## set up
+    result_list <- list()
+    model <- list() 
     
-    # mean-centering
+    ## creating a function to select ncomp and return statistical values from the model
+    calStats <- function(model){
+        plot(model, ncomp = 1:maxncomp, plottype = "validation", type = "b", main = paste("Model", r), cex.lab = 1.3, ylab = "RMSECV", legendpos = "topright") 
+        # problem! gotta find a find-knee function for this to work. Let's do manual selection for now
+        cat("Model", r, ": ")
+        ncomp <- as.numeric(readline("Select ncomp: "))
+        localresult <- data.frame(preprocessing = pre,                     
+                                  nvar = dim(model$model[[2]])[2],                      
+                                  ncomp = ncomp,                                         
+                                  R2C = round(getR2(model, ncomp = ncomp, estimate = "train"), round),                      
+                                  RMSEC = round(getRMSE(model, ncomp = ncomp, estimate = "train"), round),                      
+                                  R2CV = round(getR2(model, ncomp = ncomp, estimate = "CV"), round),                      
+                                  RMSECV = round(getRMSE(model, ncomp = ncomp, estimate = "CV"), round))
+        return(localresult)
+    }
+    
+    ## building models
+    # model 1: mean-centering
     r <- 1 # row number
-    method <- "Mean-centering"
-    model <- plsr(y ~ x, ncomp = maxncomp, validation = "CV", method = "oscorespls", segments = cvsegments)
-    # problem! gotta find a find-knee function for this to work. Let's do manual selection for now
-    plot(model, ncomp = 1:maxncomp, plottype = "validation", type = "b", main = method, cex.lab = 1.3, ylab = "RMSECV") 
-    cat(method, ": ")
-    ncomp <- as.numeric(readline("Select ncomp: "))
-    result[r,1] <- ncomp
-    result[r,2] <- round(getR2(model, ncomp = ncomp, estimate = "train"), round)
-    result[r,3] <- round(getRMSE(model, ncomp = ncomp, estimate = "train"), round)
-    result[r,4] <- round(getR2(model, ncomp = ncomp, estimate = "CV"), round)
-    result[r,5] <- round(getRMSE(model, ncomp = ncomp, estimate = "CV"), round)
+    pre <- "Mean-centering"
+    model[[r]] <- plsr(y ~ x, ncomp = maxncomp, validation = "CV", method = "oscorespls", segments = cvsegments)
+    result_list[[r]] <- calStats(model[[r]])
     
-    # norm + mean-centering
+    # model 2: norm + mean-centering
     r <- 2 # row number
-    method <- "Norm + Mean-centering"
-    model <- plsr(y ~ normalize(x), ncomp = maxncomp, validation = "CV", method = "oscorespls", segments = cvsegments)
-    plot(model, ncomp = 1:maxncomp, plottype = "validation", type = "b", main = method, cex.lab = 1.3, ylab = "RMSECV") 
-    cat(method, ": ")
-    ncomp <- as.numeric(readline("Select ncomp: "))
-    result[r,1] <- ncomp
-    result[r,2] <- round(getR2(model, ncomp = ncomp, estimate = "train"), round)
-    result[r,3] <- round(getRMSE(model, ncomp = ncomp, estimate = "train"), round)
-    result[r,4] <- round(getR2(model, ncomp = ncomp, estimate = "CV"), round)
-    result[r,5] <- round(getRMSE(model, ncomp = ncomp, estimate = "CV"), round)
+    pre <- "Norm + Mean-centering"
+    model[[r]] <- plsr(y ~ normalize(x), ncomp = maxncomp, validation = "CV", method = "oscorespls", segments = cvsegments)
+    result_list[[r]] <- calStats(model[[r]])
     
-    # norm + mean-centering
+    # model 3: autoscale
     r <- 3 # row number
-    method <- "Autoscale"
+    pre <- "Autoscale"
     index <- which(colSums(x) == 0)
     if (length(index) == 0) x_nozero <- x else x_nozero <- x[,-index] # get rid of columns with sum = 0
-    model <- plsr(y ~ x_nozero, ncomp = maxncomp, validation = "CV", method = "oscorespls", segments = cvsegments, scale = TRUE)
-    plot(model, ncomp = 1:maxncomp, plottype = "validation", type = "b", main = method, cex.lab = 1.3, ylab = "RMSECV") 
-    cat(method, ": ")
-    ncomp <- as.numeric(readline("Select ncomp: "))
-    result[r,1] <- ncomp
-    result[r,2] <- round(getR2(model, ncomp = ncomp, estimate = "train"), round)
-    result[r,3] <- round(getRMSE(model, ncomp = ncomp, estimate = "train"), round)
-    result[r,4] <- round(getR2(model, ncomp = ncomp, estimate = "CV"), round)
-    result[r,5] <- round(getRMSE(model, ncomp = ncomp, estimate = "CV"), round)
+    model[[r]] <- plsr(y ~ x_nozero, ncomp = maxncomp, validation = "CV", method = "oscorespls", segments = cvsegments, scale = TRUE)
+    result_list[[r]] <- calStats(model[[r]])
     
-    print(result)
+    ## variable reduction
+    if (reduceVar){
+        
+        if (!exists("VIP")) call_VIP
+
+        for (cycle in 1:cycles){
+            
+            # mean-centering
+            r <- 1 + (cycle * 3) # row number
+            pre <- "Mean-centering"
+            VIP_value <- t(VIP(model[[r-3]]))[,result_list[[r-3]]$ncomp]
+            index <- which(VIP_value > 1)
+            x <- model[[r-3]]$model[[2]]
+            x_reduced <- x[,index]
+            if (dim(x_reduced)[2] < maxncomp) newncomp <- dim(x_reduced)[2] else newncomp <- maxncomp
+            if (dim(x_reduced)[2] == 0) break
+            model[[r]] <- plsr(y ~ x_reduced, ncomp = newncomp, validation = "CV", method = "oscorespls", segments = cvsegments)
+            result_list[[r]] <- calStats(model[[r]])
+            
+            # norm + mean-centering
+            r <- 2 + (cycle * 3) # row number
+            pre <- "Norm + Mean-centering"
+            VIP_value <- t(VIP(model[[r-3]]))[,result_list[[r-3]]$ncomp]
+            index <- which(VIP_value > 1)
+            x <- model[[r-3]]$model[[2]]
+            x_reduced <- x[,index]
+            if (dim(x_reduced)[2] < maxncomp) newncomp <- dim(x_reduced)[2] else newncomp <- maxncomp
+            if (dim(x_reduced)[2] == 0) break
+                model[[r]] <- plsr(y ~ x_reduced, ncomp = newncomp, validation = "CV", method = "oscorespls", segments = cvsegments)
+            result_list[[r]] <- calStats(model[[r]])
+            
+            # autoscale
+            r <- 3 + (cycle * 3) # row number
+            pre <- "Autoscale"
+            VIP_value <- t(VIP(model[[r-3]]))[,result_list[[r-3]]$ncomp]
+            index <- which(VIP_value > 1)
+            x <- model[[r-3]]$model[[2]]
+            x_reduced <- x[,index]
+            if (dim(x_reduced)[2] < maxncomp) newncomp <- dim(x_reduced)[2] else newncomp <- maxncomp
+            if (dim(x_reduced)[2] == 0) break
+                model[[r]] <- plsr(y ~ x_reduced, ncomp = newncomp, validation = "CV", method = "oscorespls", segments = cvsegments, scale = TRUE)
+            result_list[[r]] <- calStats(model[[r]])
+        }        
+    }
+    result <- do.call(rbind.data.frame, result_list)
     return(result)
-    
 }
