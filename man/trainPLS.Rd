@@ -5,10 +5,12 @@
 \title{Train PLS for train dataset by cross-validation}
 \usage{
 trainPLS(x, y, maxncomp = 20, cvsegments = 10, round = 2,
-  reduceVar = FALSE, cycles = 1)
+  reduceVar = FALSE, cycles = 1, fixedncomp = NULL)
 }
 \arguments{
 \item{cvsegments}{refer to mvrCv's segments argument}
+
+\item{fixedncomp}{fixed numerical value}
 }
 \description{
 Train PLS for train dataset by cross-validation. The preprocessing method will be optimized automatically.

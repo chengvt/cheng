@@ -7,8 +7,8 @@
 #' @param fixedncomp fixed numerical value
 #' @import pls
 #' @export
-trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, 
-                     round = 2, reduceVar = FALSE, cycles = 1, fixedncomp = NULL){
+trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar = FALSE, 
+                     cycles = 1, fixedncomp = NULL){
     
     ## set up
     result_list <- list()
@@ -98,5 +98,7 @@ trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10,
         }        
     }
     result <- do.call(rbind.data.frame, result_list)
-    return(result)
+    print(result)
+    output <- list(result = result, model_list = model)
+    return(output)
 }
