@@ -128,8 +128,6 @@ biplot4.default <-
             if (legendoutside){
                 legend("topright", inset = c(-0.4-legendinset, 0), legend = unique(xlabs), 
                        col = xcol, pch = 16, xpd = TRUE)
-                # reset mar 
-                par(mar = c(5.1, 4.1, 4.1, 2.1))
             } else {
                 legend("bottomright", legend = unique(xlabs), col = xcol, pch = 16)    
                 }
@@ -148,4 +146,7 @@ biplot4.default <-
             arrows(0, 0, y[, 1L] * 0.8, y[, 2L] * 0.8, col = col[2L], 
                    length = arrow.len)
         invisible()
+        
+        # reset mar if legendoutside is true
+        if (legendoutside) par(mar = c(5.1, 4.1, 4.1, 2.1))
     }
