@@ -148,5 +148,8 @@ biplot4.default <-
         invisible()
         
         # reset mar if legendoutside is true
-        if (legendoutside) par(mar = c(5.1, 4.1, 4.1, 2.1))
+        if (legendoutside) {
+            par(mar = c(5.1, 4.1, 4.1, 2.1))
+            par(xpd = TRUE)
+            }
     }
