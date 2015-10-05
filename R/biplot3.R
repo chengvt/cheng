@@ -2,7 +2,9 @@
 #' 
 #' @description I'm too lazy to fix the code so please always specify xcol for this to work
 #'
-#' @example 
+#' @examples 
+#' 
+#' library(EEM)
 #' data(applejuice)
 #' applejuice_uf <- unfold(applejuice) # unfold list into matrix
 #' # get country of apple production
