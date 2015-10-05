@@ -128,6 +128,8 @@ biplot4.default <-
             if (legendoutside){
                 legend("topright", inset = c(-0.4-legendinset, 0), legend = unique(xlabs), 
                        col = xcol, pch = 16, xpd = TRUE)
+                # reset mar 
+                par(mar = c(5.1, 4.1, 4.1, 2.1))
             } else {
                 legend("bottomright", legend = unique(xlabs), col = xcol, pch = 16)    
                 }
