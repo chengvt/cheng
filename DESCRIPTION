@@ -9,4 +9,6 @@ Description: A package
 Imports:
 	pls,
 	EEM
+Suggests:
+	RColorBrewer
 License: mit
