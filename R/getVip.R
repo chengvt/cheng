@@ -1,8 +1,6 @@
 #' @export
 getVIP <- function(x) {
     
-    if (!exists("VIP")) call_VIP()
-    
     # extract information
     if (class(x) == "mvr") {
         value = t(VIP(x))
