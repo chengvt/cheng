@@ -10,7 +10,10 @@ plsplot2(model, newx = NULL, newy = NULL, ncomp = model$ncomp,
   ylab = "Predicted value", col.cal = "black", col.val = "grey",
   pch.cal = 21, pch.val = 21, ...)
 }
+\arguments{
+\item{model}{mvr object}
+}
 \description{
-plot both calibration and validation groups on the same graphs
+As the title says
 }
 

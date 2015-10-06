@@ -1,4 +1,8 @@
 #' plot both calibration and validation groups on the same graphs
+#' 
+#' As the title says
+#' 
+#' @param model mvr object
 #' @export
 #' @import pls
 plsplot2 <- function(model, newx = NULL, newy = NULL, ncomp = model$ncomp, 
