@@ -1,9 +1,11 @@
 #' @importFrom car dataEllipse
 #' @export
-plotScore_ellipse <- function(PCA, x = 1, y = 2, level = 0.95, ...){
+plotScore_ellipse <- function(PCA, x = 1, y = 2, level = 0.95, xlim = NULL, ylim = NULL, ...){
     scores <- PCA$x
-    MIN <- apply(scores[,c(x,y)], 2, min)
-    MAX <- apply(scores[,c(x,y)], 2, max)
+    if (is.null(xlim)) xlim <- c(min(scores[,x]), max(scores[,x]))  
+    if (is.null(ylim)) ylim <- c(min(scores[,y]), max(scores[,y])) 
+    
     dataEllipse(scores[,x], scores[,y], level = level, xlab = prcompname(PCA, x),
-                ylab = prcompname(PCA, y), cex.lab = 1.3, xlim = c(MIN[1], MAX[1]), ylim = c(MIN[2], MAX[2]), ...)
+                ylab = prcompname(PCA, y), cex.lab = 1.3, xlim = xlim, 
+                ylim = ylim, ...)
 }
