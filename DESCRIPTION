@@ -8,7 +8,9 @@ Maintainer: chengvt <vipavee.tri@gmail.com>
 Description: A package
 Imports:
 	pls,
+	RColorBrewer,
+	ggplot2,
+	reshape2
+Depends:
 	EEM
-Suggests:
-	RColorBrewer
 License: mit
