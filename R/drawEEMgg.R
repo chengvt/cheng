@@ -31,8 +31,9 @@ drawEEMgg <- function(x, ...) UseMethod("drawEEMgg", x)
 #' @export
 #'
 drawEEMgg.EEM <-
-  function(x, n, textsize = 20, color = matlab.like, geom = "path", 
-           nlevel = 20, xlab = "Excitation wavelength [nm]", ylab = "Emission wavelength [nm]", title = NULL){
+  function(x, n, textsize = 25, color = matlab.like, geom = "path", 
+           nlevel = 20, xlab = "Excitation wavelength [nm]", ylab = "Emission wavelength [nm]", title = NULL,
+           has_legend = TRUE, zlim = NULL){
 
     # retrieve data 
     data <- x[[n]] # data is a matrix 
@@ -48,15 +49,16 @@ drawEEMgg.EEM <-
     drawEEMgg_internal(x = data.melted, n = n, textsize = textsize, 
                       color = color, geom = geom, 
                       nlevel = nlevel, xlab = xlab, ylab = ylab, 
-                      title = title)
+                      title = title, has_legend = has_legend, zlim = zlim)
   }
 
 #' @describeIn drawEEMgg draw contours of the output from \code{\link[EEM]{getLoading}} and 
 #' \code{\link[EEM]{getReg}}. 
 #' @export
 drawEEMgg.EEMweight <-
-    function(x, ncomp, textsize = 20, color = matlab.like, geom = "path", 
-             nlevel = 50, xlab = "Excitation wavelength [nm]", ylab = "Emission wavelength [nm]", title = NULL){
+    function(x, ncomp, textsize = 25, color = matlab.like, geom = "path", 
+             nlevel = 50, xlab = "Excitation wavelength [nm]", ylab = "Emission wavelength [nm]", title = NULL,
+             has_legend = TRUE, zlim = NULL){
         
         # check inputs such that ncomp cannot exceed totalcomp
         totalcomp <- dim(x$value)[2]
@@ -95,7 +97,7 @@ drawEEMgg.EEMweight <-
         drawEEMgg_internal(x = data.melted, n = n, textsize = textsize, 
                            color = color, geom = geom, 
                            nlevel = nlevel, xlab = xlab, ylab = ylab, 
-                           title = title)
+                           title = title, zlim = zlim)
     }
 
 #' @export
@@ -103,42 +105,18 @@ drawEEMgg_internal <-
     function(x, n = n, textsize = textsize, 
              color = color, geom = geom, 
              nlevel = nlevel, xlab = xlab, ylab = ylab, 
-             title = title){
+             title = title, has_legend = has_legend, zlim = zlim){
         
-        # get ranges        
+        # get ranges
         ex.range <- range(x$ex, na.rm = TRUE)
         em.range <- range(x$em, na.rm = TRUE)
-        value.range <- range(x$value, na.rm = TRUE)
+        if (is.null(zlim)) zlim <- range(x$value, na.rm = TRUE)
         
-        if (geom == "polygon"){
+        if (geom == "path"){
             
-            # prepare to extend grid and add in arbitary value
-            arbitaryValue = value.range[1]-
-                (diff(value.range)/nlevel) * 1.5
-            
-            tmp1 <- data.frame(ex = ex.range[1]-1, em = unique(x$em), value = arbitaryValue)
-            tmp2 <- data.frame(ex = unique(x$ex), em = em.range[1]-1, value = arbitaryValue)
-            tmp3 <- data.frame(ex = ex.range[2]+1, em = unique(x$em), value = arbitaryValue)
-            tmp4 <- data.frame(ex = unique(x$ex), em = em.range[2]+1, value = arbitaryValue)
-            tmp <- rbind(tmp1, tmp2, tmp3, tmp4)
-            dataForPlotting <- rbind(x, tmp)
-            
-            # since stat_contour cannot accept NA values, if NA values are present replace them with zero
-            dataForPlotting$value[is.na(dataForPlotting$value)] <- 0
-            
-            # draw EEM
-            v <- ggplot(dataForPlotting, aes(x = ex, y = em, z = value)) + 
-                stat_contour(geom = "polygon", aes(fill = ..level..), bins = nlevel) +
-                theme(panel.grid = element_blank(),   # delete grid lines
-                      panel.border = element_rect(colour = "grey50", fill=NA)) +
-                scale_fill_gradientn(colours = color(nlevel)) +
-                coord_cartesian(xlim = c(ex.range[1],ex.range[2]),
-                                ylim = c(em.range[1],em.range[2])) 
-            
-        } else {
             v <- ggplot(x, aes(x = ex, y = em, z = value)) + 
                 stat_contour(geom = "path", aes(colour = ..level..), bins = nlevel) +
-                scale_colour_gradientn(colours = color(nlevel)) +
+                scale_colour_gradientn(colours = color(nlevel), limits = c(zlim[1], zlim[2])) +
                 coord_cartesian(xlim = c(ex.range[1],ex.range[2]),
                                 ylim = c(em.range[1],em.range[2])) 
         }
@@ -151,8 +129,13 @@ drawEEMgg_internal <-
                   panel.border = element_rect(colour = "grey50", fill = NA)) +
             xlab(xlab) +
             ylab(ylab) +
-            ggtitle(title) +
-            guides(fill = guide_colorbar(title = "intensity")) 
+            ggtitle(title) + 
+            theme(legend.title = element_blank()) +
+            theme(panel.border = element_rect(colour = "black"),
+                  axis.text = element_text(colour = "black"),
+                  axis.ticks = element_line(colour = "black"))
+        
+        if (!has_legend) w <- w + guides(color = "none") 
         
         return(w)
     }
