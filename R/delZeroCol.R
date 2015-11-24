@@ -1,6 +1,5 @@
 #' @export
 delZeroCol <- function(uf){
-    index <- which(colSums(uf) == 0)
-    uf_nozero <- uf[, -index]
+    uf_nozero <- uf[, no_zero_col(uf)]
     return(uf_nozero)
 }

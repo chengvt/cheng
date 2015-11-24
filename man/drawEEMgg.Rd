@@ -8,13 +8,15 @@
 \usage{
 drawEEMgg(x, ...)
 
-\method{drawEEMgg}{EEM}(x, n, textsize = 20, color = matlab.like,
-  geom = "polygon", nlevel = 50, xlab = "EX [nm]", ylab = "EM [nm]",
-  title = NULL)
+\method{drawEEMgg}{EEM}(x, n, textsize = 25, color = matlab.like,
+  geom = "path", nlevel = 20, xlab = "Excitation wavelength [nm]",
+  ylab = "Emission wavelength [nm]", title = NULL, has_legend = TRUE,
+  zlim = NULL)
 
-\method{drawEEMgg}{EEMweight}(x, ncomp, textsize = 20, color = matlab.like,
-  geom = "polygon", nlevel = 50, xlab = "EX [nm]", ylab = "EM [nm]",
-  title = NULL)
+\method{drawEEMgg}{EEMweight}(x, ncomp, textsize = 25, color = matlab.like,
+  geom = "path", nlevel = 50, xlab = "Excitation wavelength [nm]",
+  ylab = "Emission wavelength [nm]", title = NULL, has_legend = TRUE,
+  zlim = NULL)
 }
 \arguments{
 \item{textsize}{(optional) text size}
