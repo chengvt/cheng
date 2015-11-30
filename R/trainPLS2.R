@@ -33,7 +33,7 @@ trainPLS2 <- function(x, y, newx = NULL, newy = NULL, maxncomp = 20, cvsegments 
                                   R2CV = round(getR2(model, ncomp = ncomp, estimate = "CV"), round),                      
                                   RMSECV = round(getRMSE(model, ncomp = ncomp, estimate = "CV"), round))
         if (newdata){
-            localresult_p <- data.frame(R2P = round(getR2(model, ncomp = ncomp, newx = newx, newy = newy, estimate = "test"), round),
+            localresult_p <- data.frame(R2P = round(getR2(model, ncomp = ncomp, estimate = "test", newx = newx, newy = newy), round),
                                         RMSEP = round(getRMSE(model, ncomp = ncomp, newx = newx, newy = newy, estimate = "test"), round),
                                         RPD = round(calRPD2(model, ncomp = ncomp, newx = newx, newy = newy), round))
             localresult <- cbind(localresult, localresult_p)
@@ -66,7 +66,7 @@ trainPLS2 <- function(x, y, newx = NULL, newy = NULL, maxncomp = 20, cvsegments 
                 if (dim(x_reduced)[2] < maxncomp) newncomp <- dim(x_reduced)[2] else newncomp <- maxncomp
                 if (dim(x_reduced)[2] == 0) stop(paste0("The number of variables reaches zero after ", cycle, " cycles."))
                 model[[r]] <- plsr(y ~ x_reduced, ncomp = newncomp, validation = "CV", method = "oscorespls", segments = cvsegments)
-                result_list[[r]] <- calStats(model[[r]], newx, newy)
+                result_list[[r]] <- calStats(model[[r]], newx = newx, newy = newy)
 
             }        
         }

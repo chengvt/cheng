@@ -10,7 +10,7 @@
 #' @export
 getRMSE <- function(mvr, ncomp = mvr$ncomp, estimate, newx = NULL, newy = NULL){
     if (estimate %in% "test"){
-        predicted <- drop(predict(model, ncomp, newdata = newx))
+        predicted <- drop(predict(mvr, ncomp, newdata = newx))
         RMSE <- sqrt(sum((predicted - newy) ^ 2) / length(predicted))
     } else {
         RMSE <- RMSEP(mvr, estimate = estimate)$val[1,1,ncomp+1]
