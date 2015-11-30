@@ -11,12 +11,12 @@ drawEEMgg(x, ...)
 \method{drawEEMgg}{EEM}(x, n, textsize = 25, color = matlab.like,
   geom = "path", nlevel = 20, xlab = "Excitation wavelength [nm]",
   ylab = "Emission wavelength [nm]", title = NULL, has_legend = TRUE,
-  zlim = NULL)
+  zlim = NULL, breaks = waiver())
 
 \method{drawEEMgg}{EEMweight}(x, ncomp, textsize = 25, color = matlab.like,
-  geom = "path", nlevel = 50, xlab = "Excitation wavelength [nm]",
+  geom = "path", nlevel = 20, xlab = "Excitation wavelength [nm]",
   ylab = "Emission wavelength [nm]", title = NULL, has_legend = TRUE,
-  zlim = NULL)
+  zlim = NULL, breaks = waiver())
 }
 \arguments{
 \item{textsize}{(optional) text size}

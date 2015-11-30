@@ -17,6 +17,13 @@
 #' 
 #' @seealso
 #' \code{\link{drawEEM}},\code{\link{drawMultipleEEM}}
+#' 
+#' @examples 
+#' \dontrun{
+#' require(EEM)
+#' data(applejuice)
+#' drawEEMgg(applejuice, 1)
+#' }
 #'
 #' @import ggplot2
 #' @importFrom colorRamps matlab.like
@@ -33,7 +40,7 @@ drawEEMgg <- function(x, ...) UseMethod("drawEEMgg", x)
 drawEEMgg.EEM <-
   function(x, n, textsize = 25, color = matlab.like, geom = "path", 
            nlevel = 20, xlab = "Excitation wavelength [nm]", ylab = "Emission wavelength [nm]", title = NULL,
-           has_legend = TRUE, zlim = NULL){
+           has_legend = TRUE, zlim = NULL, breaks = waiver()){
 
     # retrieve data 
     data <- x[[n]] # data is a matrix 
@@ -49,7 +56,7 @@ drawEEMgg.EEM <-
     drawEEMgg_internal(x = data.melted, n = n, textsize = textsize, 
                       color = color, geom = geom, 
                       nlevel = nlevel, xlab = xlab, ylab = ylab, 
-                      title = title, has_legend = has_legend, zlim = zlim)
+                      title = title, has_legend = has_legend, zlim = zlim, breaks = breaks)
   }
 
 #' @describeIn drawEEMgg draw contours of the output from \code{\link[EEM]{getLoading}} and 
@@ -57,8 +64,8 @@ drawEEMgg.EEM <-
 #' @export
 drawEEMgg.EEMweight <-
     function(x, ncomp, textsize = 25, color = matlab.like, geom = "path", 
-             nlevel = 50, xlab = "Excitation wavelength [nm]", ylab = "Emission wavelength [nm]", title = NULL,
-             has_legend = TRUE, zlim = NULL){
+             nlevel = 20, xlab = "Excitation wavelength [nm]", ylab = "Emission wavelength [nm]", title = NULL,
+             has_legend = TRUE, zlim = NULL, breaks = waiver()){
         
         # check inputs such that ncomp cannot exceed totalcomp
         totalcomp <- dim(x$value)[2]
@@ -97,7 +104,8 @@ drawEEMgg.EEMweight <-
         drawEEMgg_internal(x = data.melted, n = n, textsize = textsize, 
                            color = color, geom = geom, 
                            nlevel = nlevel, xlab = xlab, ylab = ylab, 
-                           title = title, zlim = zlim)
+                           title = title, has_legend = has_legend, zlim = zlim,
+                           breaks = breaks)
     }
 
 #' @export
@@ -105,7 +113,7 @@ drawEEMgg_internal <-
     function(x, n = n, textsize = textsize, 
              color = color, geom = geom, 
              nlevel = nlevel, xlab = xlab, ylab = ylab, 
-             title = title, has_legend = has_legend, zlim = zlim){
+             title = title, has_legend = has_legend, zlim = zlim, breaks = breaks){
         
         # get ranges
         ex.range <- range(x$ex, na.rm = TRUE)
@@ -116,7 +124,7 @@ drawEEMgg_internal <-
             
             v <- ggplot(x, aes(x = ex, y = em, z = value)) + 
                 stat_contour(geom = "path", aes(colour = ..level..), bins = nlevel) +
-                scale_colour_gradientn(colours = color(nlevel), limits = c(zlim[1], zlim[2])) +
+                scale_colour_gradientn(colours = color(nlevel), limits = c(zlim[1], zlim[2]), breaks = breaks) +
                 coord_cartesian(xlim = c(ex.range[1],ex.range[2]),
                                 ylim = c(em.range[1],em.range[2])) 
         }
@@ -130,10 +138,12 @@ drawEEMgg_internal <-
             xlab(xlab) +
             ylab(ylab) +
             ggtitle(title) + 
-            theme(legend.title = element_blank()) +
-            theme(panel.border = element_rect(colour = "black"),
+            theme(legend.title = element_blank(),
+                  panel.border = element_rect(colour = "black"),
                   axis.text = element_text(colour = "black"),
-                  axis.ticks = element_line(colour = "black"))
+                  axis.ticks = element_line(colour = "black"),
+                  axis.title.x = element_text(vjust = -0.1),
+                  axis.title.y = element_text(vjust = 1)) 
         
         if (!has_legend) w <- w + guides(color = "none") 
         
