@@ -1,3 +1,4 @@
+#' @export
 plot_ncomp <- function(model, ncomp = NULL, cex.lab = 1.5, legendpos = "topright", ...){
     rmsep <- RMSEP(model)
     plot(rmsep, type = "b", cex.lab = cex.lab, legendpos = legendpos, ...)
