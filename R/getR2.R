@@ -10,7 +10,7 @@
 #' @export
 getR2 <- function(mvr, ncomp = mvr$ncomp, estimate, newx = NULL, newy = NULL){
     if (estimate %in% "test"){
-        predicted <- drop(predict(model, ncomp, newdata = newx))
+        predicted <- drop(predict(mvr, ncomp, newdata = newx))
         fit <- lm(predicted ~ newy)
         R2 <- summary(fit)$r.squared
     } else {
