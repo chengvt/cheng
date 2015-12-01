@@ -2,18 +2,67 @@
 % Please edit documentation in R/plsplot2.R
 \name{plsplot2}
 \alias{plsplot2}
-\title{plot both calibration and validation groups on the same graphs}
+\title{Plot pls results for both calibration and validation groups}
 \usage{
-plsplot2(model, newx = NULL, newy = NULL, ncomp = model$ncomp,
+plsplot2(mvr, newx = NULL, newy = NULL, ncomp = mvr$ncomp,
   location = "bottomright", show = c("ncomp", "R2", "RMSE"), round = 2,
   fitline = TRUE, cex.pt = 1.5, cex.stats = 1, xlab = "Measured value",
   ylab = "Predicted value", col.cal = "black", col.val = "grey",
   pch.cal = 21, pch.val = 21, ...)
 }
 \arguments{
-\item{model}{mvr object}
+\item{mvr}{mvr object}
+
+\item{newx}{newx}
+
+\item{newy}{newy}
+
+\item{ncomp}{number of component}
+
+\item{location}{legend position}
+
+\item{show}{select statistics to show}
+
+\item{round}{digits to round}
+
+\item{fitline}{add fitline or not}
+
+\item{cex.pt}{point size}
+
+\item{cex.stats}{text size of statistics legend}
+
+\item{xlab}{x-axis label}
+
+\item{ylab}{y-axis label}
+
+\item{col.cal}{point color for calibration group}
+
+\item{col.val}{point color for validation group}
+
+\item{pch.cal}{pch for calibration group}
+
+\item{pch.val}{pch for validation group}
+
+\item{...}{pass on to plot}
 }
 \description{
-As the title says
+Plot pls results for both calibration and validation groups on the same graph.
+}
+\examples{
+require(pls)
+data(yarn)
+yarn.cal <- yarn[yarn$train,]
+yarn.val <- yarn[!yarn$train,]
+model <- plsr(density ~ NIR, 15, data = yarn.cal, validation = "CV")
+plot_ncomp(model)
+ncomp <- 4 # 4 components seem to be appropriate
+model <- plsr(density ~ NIR, ncomp, data = yarn.cal) # recalculate
+
+plsplot(model) # calibration
+plsplot(model, newx = yarn.val$NIR, newy = yarn.val$density) # validation
+
+# now put those two plots together
+plsplot2(model, newx = yarn.val$NIR, newy = yarn.val$density) # calibration and validation
+plsplot2(model, newx = yarn.val$NIR, newy = yarn.val$density, col.cal = "forestgreen", col.val = "skyblue") # change point colors
 }
 
