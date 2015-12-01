@@ -28,14 +28,14 @@ trainPLS2 <- function(x, y, newx = NULL, newy = NULL, maxncomp = 20, cvsegments 
         localresult <- data.frame(preprocessing = pre,                     
                                   nvar = dim(model$model[[2]])[2],                      
                                   ncomp = ncomp,                                         
-                                  R2C = round(getR2(model, ncomp = ncomp, estimate = "train"), round),                      
-                                  RMSEC = round(getRMSE(model, ncomp = ncomp, estimate = "train"), round),                      
-                                  R2CV = round(getR2(model, ncomp = ncomp, estimate = "CV"), round),                      
-                                  RMSECV = round(getRMSE(model, ncomp = ncomp, estimate = "CV"), round))
+                                  R2C = round(getR2(model, ncomp = ncomp, estimate = "train", showprint = FALSE), round),                      
+                                  RMSEC = round(getRMSE(model, ncomp = ncomp, estimate = "train", showprint = FALSE), round),                      
+                                  R2CV = round(getR2(model, ncomp = ncomp, estimate = "CV", showprint = FALSE), round),                      
+                                  RMSECV = round(getRMSE(model, ncomp = ncomp, estimate = "CV", showprint = FALSE), round))
         if (newdata){
-            localresult_p <- data.frame(R2P = round(getR2(model, ncomp = ncomp, estimate = "test", newx = newx, newy = newy), round),
-                                        RMSEP = round(getRMSE(model, ncomp = ncomp, newx = newx, newy = newy, estimate = "test"), round),
-                                        RPD = round(calRPD2(model, ncomp = ncomp, newx = newx, newy = newy), round))
+            localresult_p <- data.frame(R2P = round(getR2(model, ncomp = ncomp, estimate = "test", newx = newx, newy = newy, showprint = FALSE), round),
+                                        RMSEP = round(getRMSE(model, ncomp = ncomp, newx = newx, newy = newy, estimate = "test", showprint = FALSE), round),
+                                        RPD = round(calRPD2(model, ncomp = ncomp, newx = newx, newy = newy, showprint = FALSE), round))
             localresult <- cbind(localresult, localresult_p)
         }
         
@@ -48,7 +48,7 @@ trainPLS2 <- function(x, y, newx = NULL, newy = NULL, maxncomp = 20, cvsegments 
         r <- 1 # row number
         pre <- "Mean-centering"
         model[[r]] <- plsr(y ~ x, ncomp = maxncomp, validation = "CV", method = "oscorespls", segments = cvsegments)
-        result_list[[r]] <- calStats(model[[r]])
+        result_list[[r]] <- calStats(model[[r]], newx = newx, newy = newy)
         
         if (reduceVar){
             
@@ -63,10 +63,11 @@ trainPLS2 <- function(x, y, newx = NULL, newy = NULL, maxncomp = 20, cvsegments 
                 index <- which(VIP_value > 1)
                 x <- model[[r-1]]$model[[2]]
                 x_reduced <- x[,index, drop = FALSE]
+                newx_reduced <- newx[,index]
                 if (dim(x_reduced)[2] < maxncomp) newncomp <- dim(x_reduced)[2] else newncomp <- maxncomp
                 if (dim(x_reduced)[2] == 0) stop(paste0("The number of variables reaches zero after ", cycle, " cycles."))
                 model[[r]] <- plsr(y ~ x_reduced, ncomp = newncomp, validation = "CV", method = "oscorespls", segments = cvsegments)
-                result_list[[r]] <- calStats(model[[r]], newx = newx, newy = newy)
+                result_list[[r]] <- calStats(model[[r]], newx = newx_reduced, newy = newy)
 
             }        
         }
@@ -76,7 +77,7 @@ trainPLS2 <- function(x, y, newx = NULL, newy = NULL, maxncomp = 20, cvsegments 
         r <- 1 # row number
         pre <- "Norm + Mean-centering"
         model[[r]] <- plsr(y ~ normalize(x), ncomp = maxncomp, validation = "CV", method = "oscorespls", segments = cvsegments)
-        result_list[[r]] <- calStats(model[[r]])
+        result_list[[r]] <- calStats(model[[r]], newx = newx, newy = newy)
         
         if (reduceVar){
             
@@ -91,10 +92,11 @@ trainPLS2 <- function(x, y, newx = NULL, newy = NULL, maxncomp = 20, cvsegments 
                 index <- which(VIP_value > 1)
                 x <- model[[r-1]]$model[[2]]
                 x_reduced <- x[,index]
+                newx_reduced <- newx[,index]
                 if (dim(x_reduced)[2] < maxncomp) newncomp <- dim(x_reduced)[2] else newncomp <- maxncomp
                 if (dim(x_reduced)[2] == 0) stop(paste0("The number of variables reaches zero after ", cycle, " cycles."))
                 model[[r]] <- plsr(y ~ x_reduced, ncomp = newncomp, validation = "CV", method = "oscorespls", segments = cvsegments)
-                result_list[[r]] <- calStats(model[[r]], newx, newy)
+                result_list[[r]] <- calStats(model[[r]], newx_reduced, newy)
                 
             }        
         }
@@ -105,7 +107,7 @@ trainPLS2 <- function(x, y, newx = NULL, newy = NULL, maxncomp = 20, cvsegments 
         index <- which(colSums(x) == 0)
         if (length(index) == 0) x_nozero <- x else x_nozero <- x[,-index] # get rid of columns with sum = 0
         model[[r]] <- plsr(y ~ x_nozero, ncomp = maxncomp, validation = "CV", method = "oscorespls", segments = cvsegments, scale = TRUE)
-        result_list[[r]] <- calStats(model[[r]])
+        result_list[[r]] <- calStats(model[[r]], newx = newx, newy = newy)
         
         if (reduceVar){
             
@@ -120,10 +122,11 @@ trainPLS2 <- function(x, y, newx = NULL, newy = NULL, maxncomp = 20, cvsegments 
                 index <- which(VIP_value > 1)
                 x <- model[[r-1]]$model[[2]]
                 x_reduced <- x[,index]
+                newx_reduced <- newx[,index]
                 if (dim(x_reduced)[2] < maxncomp) newncomp <- dim(x_reduced)[2] else newncomp <- maxncomp
                 if (dim(x_reduced)[2] == 0) stop(paste0("The number of variables reaches zero after ", cycle, " cycles."))
                 model[[r]] <- plsr(y ~ x_reduced, ncomp = newncomp, validation = "CV", method = "oscorespls", segments = cvsegments, scale = TRUE)
-                result_list[[r]] <- calStats(model[[r]], newx, newy)
+                result_list[[r]] <- calStats(model[[r]], newx_reduced, newy)
             }        
         }
     }
