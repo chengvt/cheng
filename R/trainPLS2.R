@@ -35,7 +35,7 @@ trainPLS2 <- function(x, y, newx = NULL, newy = NULL, maxncomp = 20, cvsegments 
         if (newdata){
             localresult_p <- data.frame(R2P = round(getR2(model, ncomp = ncomp, estimate = "test", newx = newx, newy = newy, showprint = FALSE), round),
                                         RMSEP = round(getRMSE(model, ncomp = ncomp, newx = newx, newy = newy, estimate = "test", showprint = FALSE), round),
-                                        RPD = round(calRPD2(model, ncomp = ncomp, newx = newx, newy = newy, showprint = FALSE), round))
+                                        RPD = round(calRPD2(model, ncomp = ncomp, newx = newx, newy = newy), round))
             localresult <- cbind(localresult, localresult_p)
         }
         
