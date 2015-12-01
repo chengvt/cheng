@@ -2,20 +2,35 @@
 % Please edit documentation in R/getRMSE.R
 \name{getRMSE}
 \alias{getRMSE}
-\title{get RMSE}
+\title{get RMSE from mvr object}
 \usage{
-getRMSE(mvr, ncomp = mvr$ncomp, estimate, newx = NULL, newy = NULL)
+getRMSE(mvr, ncomp = mvr$ncomp, estimate, newx = NULL, newy = NULL,
+  showprint = TRUE)
 }
 \arguments{
 \item{mvr}{mvr object}
+
+\item{ncomp}{number of component}
 
 \item{estimate}{a subset of c("train", "CV", "test")}
 
 \item{newx}{predictors for test group}
 
 \item{newy}{measured value for test group}
+
+\item{showprint}{show result in console}
 }
 \description{
-get RMSE
+Alternative to pls package's `RMSEP`. While `RMSEP` requires a `newdata` dataframe which combines
+both predictors and target, `getRMSE` lets you put in `newx` and `newy` separately.
+Aside from that, declaring `estimate` in `getRMSE` remind you which value you got.
+}
+\examples{
+require(pls)
+data(yarn)
+model <- plsr(density ~ NIR, 6, data = yarn, validation = "CV")
+RMSEP(model)
+getRMSE(model, estimate = "train") # return RMSE at particular ncomp without intercept value
+getRMSE(model, estimate = "CV")
 }
 
