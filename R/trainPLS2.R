@@ -63,11 +63,11 @@ trainPLS2 <- function(x, y, newx = NULL, newy = NULL, maxncomp = 20, cvsegments 
                 index <- which(VIP_value > 1)
                 x <- model[[r-1]]$model[[2]]
                 x_reduced <- x[,index, drop = FALSE]
-                newx_reduced <- newx[,index]
+                newx <- newx[,index]
                 if (dim(x_reduced)[2] < maxncomp) newncomp <- dim(x_reduced)[2] else newncomp <- maxncomp
                 if (dim(x_reduced)[2] == 0) stop(paste0("The number of variables reaches zero after ", cycle, " cycles."))
                 model[[r]] <- plsr(y ~ x_reduced, ncomp = newncomp, validation = "CV", method = "oscorespls", segments = cvsegments)
-                result_list[[r]] <- calStats(model[[r]], newx = newx_reduced, newy = newy)
+                result_list[[r]] <- calStats(model[[r]], newx = newx, newy = newy)
 
             }        
         }
@@ -92,11 +92,11 @@ trainPLS2 <- function(x, y, newx = NULL, newy = NULL, maxncomp = 20, cvsegments 
                 index <- which(VIP_value > 1)
                 x <- model[[r-1]]$model[[2]]
                 x_reduced <- x[,index]
-                newx_reduced <- newx[,index]
+                newx <- newx[,index]
                 if (dim(x_reduced)[2] < maxncomp) newncomp <- dim(x_reduced)[2] else newncomp <- maxncomp
                 if (dim(x_reduced)[2] == 0) stop(paste0("The number of variables reaches zero after ", cycle, " cycles."))
                 model[[r]] <- plsr(y ~ x_reduced, ncomp = newncomp, validation = "CV", method = "oscorespls", segments = cvsegments)
-                result_list[[r]] <- calStats(model[[r]], newx_reduced, newy)
+                result_list[[r]] <- calStats(model[[r]], newx, newy)
                 
             }        
         }
@@ -122,11 +122,11 @@ trainPLS2 <- function(x, y, newx = NULL, newy = NULL, maxncomp = 20, cvsegments 
                 index <- which(VIP_value > 1)
                 x <- model[[r-1]]$model[[2]]
                 x_reduced <- x[,index]
-                newx_reduced <- newx[,index]
+                newx <- newx[,index]
                 if (dim(x_reduced)[2] < maxncomp) newncomp <- dim(x_reduced)[2] else newncomp <- maxncomp
                 if (dim(x_reduced)[2] == 0) stop(paste0("The number of variables reaches zero after ", cycle, " cycles."))
                 model[[r]] <- plsr(y ~ x_reduced, ncomp = newncomp, validation = "CV", method = "oscorespls", segments = cvsegments, scale = TRUE)
-                result_list[[r]] <- calStats(model[[r]], newx_reduced, newy)
+                result_list[[r]] <- calStats(model[[r]], newx, newy)
             }        
         }
     }
