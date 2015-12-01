@@ -1,29 +1,27 @@
 #' Draw contour for EEM data using ggplot2
 #' 
-#' This function draw contour for EEM data using ggplot2.
+#' This function draw contour for EEM data using ggplot2. Use `ggsave` to save the contours.
 #' 
 #' @param textsize (optional) text size
-#' @param geom (optional) object to display data. Can be "polygon" or "path". 
+#' @param geom (optional) object to display data. Can be "polygon" or "path" but default to "path" at the moment to 
+#' due to some bugs for "polygon". 
 #' 
 #' @return A figure is returned on the graphic device
 #' 
 #' @details \code{\link{drawEEM}} is faster and should be used. But since it lacks multiple plotting capacity, \code{\link{drawEEMgg}} was created to work with \code{\link{drawMultipleEEM}}.
 #' 
 #' @examples
-#' data(AppleJuice)
-#' drawEEMgg(AppleJuice, n = 36) # draw EEM of sample no.36
-#' drawEEMgg(AppleJuice, n = 36, color = cm.colors) # draw EEM of sample no.36 with different color
-#' drawEEMgg(AppleJuice, n = 36, geom = "path", nlevel = 20) # draw EEM of sample no.36 with different color
+#' data(applejuice)
+#' drawEEMgg(applejuice, 1) # draw EEM of sample no.1
+#' drawEEMgg(applejuice, 1, color = cm.colors) # draw EEM of sample no.31 with different color
+#' drawEEMgg(applejuice, 1, nlevel = 5) # reduce nlevel
+#' 
+#' # can be combined with other ggplot2 commands
+#' drawEEMgg(applejuice, 1) + theme_bw() 
 #' 
 #' @seealso
 #' \code{\link{drawEEM}},\code{\link{drawMultipleEEM}}
 #' 
-#' @examples 
-#' \dontrun{
-#' require(EEM)
-#' data(applejuice)
-#' drawEEMgg(applejuice, 1)
-#' }
 #'
 #' @import ggplot2
 #' @importFrom colorRamps matlab.like
