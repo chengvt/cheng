@@ -25,10 +25,10 @@ trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar 
         localresult <- data.frame(preprocessing = pre,                     
                                   nvar = dim(model$model[[2]])[2],                      
                                   ncomp = ncomp,                                         
-                                  R2C = round(getR2(model, ncomp = ncomp, estimate = "train"), round),                      
-                                  RMSEC = round(getRMSE(model, ncomp = ncomp, estimate = "train"), round),                      
-                                  R2CV = round(getR2(model, ncomp = ncomp, estimate = "CV"), round),                      
-                                  RMSECV = round(getRMSE(model, ncomp = ncomp, estimate = "CV"), round))
+                                  R2C = round(getR2(model, ncomp = ncomp, estimate = "train", showprint = FALSE), round),                      
+                                  RMSEC = round(getRMSE(model, ncomp = ncomp, estimate = "train", showprint = FALSE), round),                      
+                                  R2CV = round(getR2(model, ncomp = ncomp, estimate = "CV", showprint = FALSE), round),                      
+                                  RMSECV = round(getRMSE(model, ncomp = ncomp, estimate = "CV", showprint = FALSE), round))
         return(localresult)
     }
     

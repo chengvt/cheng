@@ -1,18 +1,22 @@
+#' Draw spectra
+#' 
+#' @examples 
+#' require(EEM)
+#' data(applejuice)
+#' country <- sapply(strsplit(names(applejuice), split = "-"), "[", 1)
+#'
+#' # ggplot
+#' drawSpec(unfold(applejuice), EX = 340)
+#' drawSpec(unfold(applejuice), EX = 340, group = country)
+#' drawSpec(unfold(applejuice), EM = 400, group = country)
+#' 
+#' # base plot
+#' drawSpec(unfold(applejuice), EX = 340, group = country, ggplot = FALSE)
+#' drawSpec(unfold(applejuice), EM = 400, group = country, ggplot = FALSE)
+#' 
+#' @import ggplot2 dplyr reshape2
+#' 
 #' @export
-# Example
-# require(EEM)
-# data(applejuice)
-# country <- sapply(strsplit(names(applejuice), split = "-"), "[", 1)
-#
-# # ggplot
-# drawSpec(unfold(applejuice), EX = 340)
-# drawSpec(unfold(applejuice), EX = 340, group = country)
-# drawSpec(unfold(applejuice), EM = 400, group = country)
-# 
-# # base plot
-# drawSpec(unfold(applejuice), EX = 340, group = country, ggplot = FALSE)
-# drawSpec(unfold(applejuice), EM = 400, group = country, ggplot = FALSE)
-
 drawSpec <- function(EEM_uf, EX = NULL, EM = NULL, group = NULL, ggplot = TRUE,
                      legendlocation = "topright") {
     
@@ -59,44 +63,50 @@ drawSpec <- function(EEM_uf, EX = NULL, EM = NULL, group = NULL, ggplot = TRUE,
         if (hasGroup){
             data$group <- group
         }
-        library(reshape2)
-        library(ggplot2)
-        data_melted <- melt(data, id.vars = c("sample", if (!is.null(group)) {"group"} else NULL))
-        library(dplyr)
-        data_melted <- mutate(data_melted, 
-                                em = as.numeric(substr(variable, 8, 10)),
-                                ex = as.numeric(substr(variable, 3, 5))) 
         
-        if (fixEX) {X <- "em"} else {X <- "ex"}
-        if (!hasGroup){
-            p <- ggplot(data_melted, aes(x = eval(parse(text = X)), y = value, group = sample)) 
+        data_melted <- melt(data, id.vars = c("sample", if (!is.null(group)) {"group"} else NULL))
+        data_melted <- mutate(data_melted, 
+                              em = as.numeric(getEM(variable)),
+                              ex = as.numeric(getEX(variable))) 
+        
+        if (fixEX) {
+            if (!hasGroup){
+                p <- ggplot(data_melted, aes(x = em, y = value, group = sample)) 
+            } else {
+                p <- ggplot(data_melted, aes(x = em, y = value, group = sample, 
+                                             color = group))
+            }
         } else {
-            p <- ggplot(data_melted, aes(x = eval(parse(text = X)), y = value, group = sample, 
-                                         color = group))
+            if (!hasGroup){
+                p <- ggplot(data_melted, aes(x = ex, y = value, group = sample)) 
+            } else {
+                p <- ggplot(data_melted, aes(x = ex, y = value, group = sample, 
+                                             color = group))
+            } 
         }
+        
         p <- p + 
             geom_line() + theme_bw() + 
             ylab("intensity") + xlab(xlab) +
             theme(text = element_text(size = 18)) + 
             ggtitle(title)
         return(p)
-    }
-
-    if (!ggplot){
+        
+    } else {
         data <- t(EEM_selected)
         
         if (fixEX) {
-            rownames(data) <- as.numeric(substr(rownames(data), 8, 10))
+            rownames(data) <- as.numeric(getEX(rownames(data)))
         } else {
-            rownames(data) <- as.numeric(substr(rownames(data), 3, 5))
+            rownames(data) <- as.numeric(getEM(rownames(data)))
         }
         if (hasGroup) col <- as.factor(group) else col <- 1
         matplot(rownames(data), data, type = "l", xlab = xlab, ylab = "Intensity",
                 main = title, col = col)
         if (hasGroup) legend(legendlocation, legend = levels(as.factor(group)), 
                              col = 1:length(levels(as.factor(group))), lwd = 1)
+        
     }
-
 }
 
 
