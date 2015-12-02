@@ -96,9 +96,9 @@ drawSpec <- function(EEM_uf, EX = NULL, EM = NULL, group = NULL, ggplot = TRUE,
         data <- t(EEM_selected)
         
         if (fixEX) {
-            rownames(data) <- as.numeric(getEX(rownames(data)))
-        } else {
             rownames(data) <- as.numeric(getEM(rownames(data)))
+        } else {
+            rownames(data) <- as.numeric(getEX(rownames(data)))
         }
         if (hasGroup) col <- as.factor(group) else col <- 1
         matplot(rownames(data), data, type = "l", xlab = xlab, ylab = "Intensity",
