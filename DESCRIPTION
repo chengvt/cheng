@@ -12,7 +12,6 @@ Imports:
 	ggplot2,
 	reshape2,
 	dplyr,
-	car
-Depends:
+	car,
 	EEM
 License: mit
