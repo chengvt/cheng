@@ -14,7 +14,9 @@
 #' drawSpec(unfold(applejuice), EX = 340, group = country, ggplot = FALSE)
 #' drawSpec(unfold(applejuice), EM = 400, group = country, ggplot = FALSE)
 #' 
-#' @import ggplot2 dplyr reshape2
+#' @import ggplot2 
+#' @importFrom dplyr mutate
+#' @importFrom reshape2 melt
 #' 
 #' @export
 drawSpec <- function(EEM_uf, EX = NULL, EM = NULL, group = NULL, ggplot = TRUE,

@@ -13,5 +13,6 @@ Imports:
 	reshape2,
 	dplyr,
 	car,
-	EEM
+	EEM,
+	hyperSpec
 License: mit
