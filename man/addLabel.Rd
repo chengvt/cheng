@@ -4,7 +4,7 @@
 \alias{addLabel}
 \title{Add label to Raman plot}
 \usage{
-addLabel(hyperSpec, wavelength, label = NULL)
+addLabel(data, wavelength, label = NULL)
 }
 \description{
 Add label to Raman plot

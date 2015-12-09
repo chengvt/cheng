@@ -4,7 +4,7 @@
 \alias{readRaman}
 \title{Read raw Raman files}
 \usage{
-readRaman(path, hyperSpec = TRUE)
+readRaman(path, hyperSpec = FALSE)
 }
 \arguments{
 \item{path}{path to the files or folders which contains raw files}
