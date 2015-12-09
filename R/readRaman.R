@@ -12,7 +12,7 @@
 #' @importFrom R.utils isDirectory isFile
 #' @import hyperSpec
 #' @export
-readRaman <- function(path, hyperSpec = TRUE){
+readRaman <- function(path, hyperSpec = FALSE){
     
     if (nargs() == 0) stop("Folder or file has not been specified.")
     

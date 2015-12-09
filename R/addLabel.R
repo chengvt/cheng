@@ -1,8 +1,15 @@
 #' Add label to Raman plot
-addLabel <- function(hyperSpec, wavelength, label = NULL){
-    if (is.null(label)) label <- hyperSpec$names
-    datamatrix <- hyperSpec$spc
+#' @export
+addLabel <- function(data, wavelength, label = NULL){
+    if (class(data) %in% "hyperSpec"){
+        if (is.null(label)) label <- hyperSpec$names
+        datamatrix <- hyperSpec$spc
+    } else if (class(data) %in% "matrix"){
+        if (is.null(label)) label <- rownames(data)
+        datamatrix <- data
+    } else break
     all_wavelength <- as.numeric(as.character(colnames(datamatrix)))
     index <- which.min(abs(all_wavelength - wavelength))
     text(colnames(datamatrix)[index], datamatrix[,index], label)
+
 }
