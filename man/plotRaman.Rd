@@ -2,6 +2,7 @@
 % Please edit documentation in R/plotRaman.R
 \name{plotRaman}
 \alias{plotRaman}
+\title{Plot raman spectra}
 \usage{
 plotRaman(data, group = NULL, legendlocation = "topright", ...)
 }
@@ -11,5 +12,8 @@ plotRaman(data, group = NULL, legendlocation = "topright", ...)
 \item{...}{extra arguments passing to matplot}
 
 \item{hyperSpec}{hyperSpec class object}
+}
+\description{
+Plot raman spectra
 }
 

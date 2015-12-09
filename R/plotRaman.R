@@ -1,3 +1,7 @@
+#' Plot raman spectra
+#' 
+#' Plot raman spectra
+#' 
 #' @param hyperSpec hyperSpec class object
 #' @param group a vector of characters or factors describing categories
 #' @param ... extra arguments passing to matplot
