@@ -4,7 +4,8 @@
 \alias{plotRamanLoading}
 \title{Plot PCA loadings for Raman}
 \usage{
-plotRamanLoading(PCA, ncomp = 1:6, ylab = "loading", ...)
+plotRamanLoading(PCA, ncomp = 1:6, xlab = "Raman shift (1/cm)",
+  ylab = "loading", ...)
 }
 \arguments{
 \item{PCA}{output variable from \code{\link[stats]{prcomp}}}
