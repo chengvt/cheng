@@ -14,5 +14,7 @@ Imports:
 	dplyr,
 	car,
 	EEM,
-	hyperSpec
-License: mit
+	hyperSpec,
+	R.utils,
+	colorRamps
+License: Mit

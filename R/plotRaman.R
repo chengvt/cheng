@@ -9,6 +9,17 @@
 #' @param xlab x-axis label
 #' @param ylab y-axis label
 #' @param ... extra arguments passing to plotspc or matplot
+#' 
+#' @examples 
+#' data(raman)
+#' plotRaman(raman)
+#' plotRaman(raman, col = "black") # all black
+#' plotRaman(raman, cex.lab = 1.5) # bigger axis label
+#' plotRaman(raman, col = cm.colors(47)) # change color pallette 
+#' 
+#' # plot by group
+#' cultivar <- getText(rownames(raman), 2)
+#' plotRaman(raman, group = cultivar)
 #'
 #' @import hyperSpec
 #' @export

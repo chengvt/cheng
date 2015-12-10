@@ -6,7 +6,19 @@
 \usage{
 addLabel(data, x, label = NULL)
 }
+\arguments{
+\item{data}{raman data. accept both matrix and hyperSpec class.}
+
+\item{x}{x value for labels to appear}
+
+\item{label}{labels. If not supplied will use sample names in data.}
+}
 \description{
 Add label to Raman plot
+}
+\examples{
+data(raman)
+plotRaman(raman)
+addLabel(raman, 1300)
 }
 

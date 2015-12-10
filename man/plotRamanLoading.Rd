@@ -19,4 +19,11 @@ plotRamanLoading(PCA, ncomp = 1:6, xlab = "Raman shift (1/cm)",
 \description{
 Plot PCA loadings for Raman
 }
+\examples{
+data(raman)
+PCA <- prcomp(raman)
+plotRamanLoading(PCA)
+plotRamanLoading(PCA, ncomp = 1:2) # display only the first two components
+plotRamanLoading(PCA, ncomp = c(1,3)) # display only the first and the third component
+}
 

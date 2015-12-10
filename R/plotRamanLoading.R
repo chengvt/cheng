@@ -7,6 +7,13 @@
 #' @param ylab y-axis label
 #' @param ... additional arguments for \code{\link[graphic]{matplot}}
 #' 
+#' @examples 
+#' data(raman)
+#' PCA <- prcomp(raman)
+#' plotRamanLoading(PCA)
+#' plotRamanLoading(PCA, ncomp = 1:2) # display only the first two components
+#' plotRamanLoading(PCA, ncomp = c(1,3)) # display only the first and the third component
+#' 
 #' @export
 plotRamanLoading <- function(PCA, ncomp = 1:6, xlab = "Raman shift (1/cm)", ylab = "loading", ...){
     par(mar = c(5,4,4,5) + 0.1)

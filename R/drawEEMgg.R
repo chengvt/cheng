@@ -11,6 +11,7 @@
 #' @details \code{\link{drawEEM}} is faster and should be used. But since it lacks multiple plotting capacity, \code{\link{drawEEMgg}} was created to work with \code{\link{drawMultipleEEM}}.
 #' 
 #' @examples
+#' require(EEM)
 #' data(applejuice)
 #' drawEEMgg(applejuice, 1) # draw EEM of sample no.1
 #' drawEEMgg(applejuice, 1, color = cm.colors) # draw EEM of sample no.31 with different color
