@@ -30,9 +30,9 @@ plotRaman <- function(data, group = NULL, legendlocation = "topright",
 
     if (class(data) %in% "hyperSpec"){
         if (has_g){
-            plotspc(hyperSpec, col = group, ...)
+            plotspc(hyperSpec, col = group, title.args = list(xlab = xlab, y = lab), ...)
             legend(legendlocation, col = 1:ngroup, lwd = 2, levels(group))
-        } else  plotspc(hyperSpec, ...)
+        } else  plotspc(hyperSpec, title.args = list(xlab = xlab, y = lab), ...)
     } else if (class(data) %in% "matrix") {
         if (has_g){
             matplot(colnames(data), t(data), type = "l", lty = 1, xlab = xlab, ylab = ylab, col = group)
