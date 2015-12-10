@@ -15,7 +15,7 @@ plotRamanLoading <- function(PCA, ncomp = 1:6, xlab = "Raman shift (1/cm)", ylab
     matplot(wavelength, loading[, ncomp], lty = 1, type = "l", 
             xlab = xlab, ylab = ylab, ...)
     par(xpd = T)
-    legend(par()$usr[2], par()$usr[4], legend = ncomp, lty = 1, col = ncomp)
+    legend(par()$usr[2], par()$usr[4], legend = ncomp, lty = 1, col = 1:length(ncomp))
     par(mar = c(5,4,4,2) + 0.1)
     par(xpd = F)
 }
