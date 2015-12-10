@@ -3,6 +3,7 @@
 #' Plot PCA scores with ellipse using \code{\link{dataEllipse}}
 #' 
 #' @examples 
+#' require(EEM)
 #' data(applejuice)
 #' applejuice_uf <- unfold(applejuice)
 #' PCA <- prcomp(applejuice_uf)

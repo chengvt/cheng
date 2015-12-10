@@ -31,7 +31,7 @@ A figure is returned on the graphic device
 This function draw contour for EEM data using ggplot2. Use `ggsave` to save the contours.
 }
 \details{
-\code{\link{drawEEM}} is faster and should be used. But since it lacks multiple plotting capacity, \code{\link{drawEEMgg}} was created to work with \code{\link{drawMultipleEEM}}.
+\code{\link{drawEEM}} is faster and should be used. But since it lacks multiple plotting capacity, \code{\link{drawEEMgg}} was created to work with drawMultipleEEM.
 }
 \section{Methods (by class)}{
 \itemize{
@@ -41,6 +41,8 @@ This function draw contour for EEM data using ggplot2. Use `ggsave` to save the 
 \code{\link[EEM]{getReg}}.
 }}
 \examples{
+\dontrun{
+require(EEM)
 data(applejuice)
 drawEEMgg(applejuice, 1) # draw EEM of sample no.1
 drawEEMgg(applejuice, 1, color = cm.colors) # draw EEM of sample no.31 with different color
@@ -48,6 +50,7 @@ drawEEMgg(applejuice, 1, nlevel = 5) # reduce nlevel
 
 # can be combined with other ggplot2 commands
 drawEEMgg(applejuice, 1) + theme_bw()
+}
 }
 \seealso{
 \code{\link{drawEEM}},\code{\link{drawMultipleEEM}}

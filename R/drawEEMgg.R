@@ -8,9 +8,10 @@
 #' 
 #' @return A figure is returned on the graphic device
 #' 
-#' @details \code{\link{drawEEM}} is faster and should be used. But since it lacks multiple plotting capacity, \code{\link{drawEEMgg}} was created to work with \code{\link{drawMultipleEEM}}.
+#' @details \code{\link{drawEEM}} is faster and should be used. But since it lacks multiple plotting capacity, \code{\link{drawEEMgg}} was created to work with drawMultipleEEM.
 #' 
 #' @examples
+#' \dontrun{
 #' require(EEM)
 #' data(applejuice)
 #' drawEEMgg(applejuice, 1) # draw EEM of sample no.1
@@ -19,6 +20,7 @@
 #' 
 #' # can be combined with other ggplot2 commands
 #' drawEEMgg(applejuice, 1) + theme_bw() 
+#' }
 #' 
 #' @seealso
 #' \code{\link{drawEEM}},\code{\link{drawMultipleEEM}}

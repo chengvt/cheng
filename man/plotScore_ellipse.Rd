@@ -11,6 +11,7 @@ plotScore_ellipse(PCA, x = 1, y = 2, level = 0.95, xlim = NULL,
 Plot PCA scores with ellipse using \code{\link{dataEllipse}}
 }
 \examples{
+require(EEM)
 data(applejuice)
 applejuice_uf <- unfold(applejuice)
 PCA <- prcomp(applejuice_uf)
