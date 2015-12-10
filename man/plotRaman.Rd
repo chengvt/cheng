@@ -4,14 +4,22 @@
 \alias{plotRaman}
 \title{Plot raman spectra}
 \usage{
-plotRaman(data, group = NULL, legendlocation = "topright", ...)
+plotRaman(data, group = NULL, legendlocation = "topright",
+  xlab = "Raman shift (1/cm)", ylab = "Counts", ...)
 }
 \arguments{
+\item{data}{matrix or hyperSpec class object}
+
 \item{group}{a vector of characters or factors describing categories}
 
-\item{...}{extra arguments passing to matplot}
+\item{legendlocation}{location of legend. can be anything from "bottomright",
+"bottom", "bottomleft", "left", "topleft", "top", "topright", "right" or "center".}
 
-\item{hyperSpec}{hyperSpec class object}
+\item{xlab}{x-axis label}
+
+\item{ylab}{y-axis label}
+
+\item{...}{extra arguments passing to plotspc or matplot}
 }
 \description{
 Plot raman spectra
