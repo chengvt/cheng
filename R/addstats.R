@@ -10,12 +10,14 @@
 #' @param round number of digits to round
 #' @param newx predictors for test group
 #' @param newy measured value for test group
+#' @param fitline logical argument whether to add fitline or not
 #' @param ... additional arguments for \code{\link{legend}}
 #' @inheritParams pls:::R2
+#' 
 #' @export
 #' @import pls
 
-addstats <- function(model, ncomp = model$ncomp, 
+addStats <- function(model, ncomp = model$ncomp, 
                      estimate = "train",
                      location = "bottomright",
                      show = c("ncomp", "R2", "RMSE"),

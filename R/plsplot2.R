@@ -63,7 +63,7 @@ plsplot2 <- function(mvr, newx = NULL, newy = NULL, ncomp = mvr$ncomp,
     points(y.val.m, y.val.p, pch = pch.val, col = "black", bg = col.val, cex = cex.pt)
     
     # add stats
-    addstats(mvr, ncomp = ncomp, 
+    addStats(mvr, ncomp = ncomp, 
              estimate = "test", location = location,
              show = show, round = round, newx = newx, 
              newy = newy, fitline = fitline, cex = cex.stats)

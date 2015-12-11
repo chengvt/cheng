@@ -1,10 +1,10 @@
-#' Draw loading as points
+#' Draw scores as points with colors
 #' 
 #' @description I'm too lazy to fix the code so please always specify xcol for this to work
 #'
 #' @examples 
 #' 
-#' library(EEM)
+#' require(EEM)
 #' data(applejuice)
 #' applejuice_uf <- unfold(applejuice) # unfold list into matrix
 #' # get country of apple production
@@ -19,7 +19,7 @@
 #' result <- prcomp(applejuice_uf_selectedPeak)
 #' 
 #' # create color palette for x points
-#' library(RColorBrewer)
+#' require(RColorBrewer)
 #' xcol <- brewer.pal(3, "Dark2")
 #' biplot3(result, xlab = prcompname(result ,1), ylab = prcompname(result,2), 
 #' xlabs = country, xcol = xcol)

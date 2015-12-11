@@ -41,20 +41,20 @@ plsplot <- function(mvr, ncomp = mvr$ncomp,
     if (!(is.null(newx) & is.null(newy))) estimate = "test"
     if (estimate %in% "train"){
         predplot(mvr, ncomp = ncomp, which = estimate, ...)
-        addstats(mvr, ncomp = ncomp, 
+        addStats(mvr, ncomp = ncomp, 
                  estimate = estimate, location = location,
                  show = show, round = round, newx = newx, 
                  newy = newy, fitline = fitline, cex = cex.stats)
     } else if (estimate %in% "CV"){
         predplot(mvr, ncomp = ncomp, which = "validation", ...)
-        addstats(mvr, ncomp = ncomp, 
+        addStats(mvr, ncomp = ncomp, 
                  estimate = estimate, location = location,
                  show = show, round = round, newx = newx, 
                  newy = newy, fitline = fitline, cex = cex.stats)
     } else if (estimate %in% "test"){
         predicted <- drop(predict(mvr, ncomp, newdata = newx))
         plot(newy, predicted, ...)
-        addstats(mvr, ncomp = ncomp, 
+        addStats(mvr, ncomp = ncomp, 
                  estimate = estimate, location = location,
                  show = show, round = round, newx = newx, 
                  newy = newy, fitline = fitline, cex = cex.stats)

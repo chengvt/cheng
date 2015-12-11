@@ -2,7 +2,7 @@
 % Please edit documentation in R/biplot4.R
 \name{biplot4}
 \alias{biplot4}
-\title{Draw loading as points}
+\title{Draw scores as points}
 \usage{
 biplot4(x, ...)
 }
@@ -21,7 +21,7 @@ I'm too lazy to fix the code so please always specify xcol for this to work.
 Biplot4 is similar to biplot3 except that the legend will be place outside
 }
 \examples{
-library(EEM)
+require(EEM)
 data(applejuice)
 applejuice_uf <- unfold(applejuice) # unfold list into matrix
 # get country of apple production

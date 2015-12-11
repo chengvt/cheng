@@ -1,3 +1,29 @@
+#' Color the scores by group
+#' 
+#' @description I'm too lazy to fix the code so please always specify xcol for this to work
+#'
+#' @examples 
+#' 
+#' require(EEM)
+#' data(applejuice)
+#' applejuice_uf <- unfold(applejuice) # unfold list into matrix
+#' # get country of apple production
+#' country <- sapply(strsplit(names(applejuice), split = "-"), "[", 1)
+#' 
+#' # select peaks
+#' local_peak <- findLocalMax(applejuice, n = 1)
+#' index <- colnames(applejuice_uf) %in% local_peak
+#' applejuice_uf_selectedPeak <- applejuice_uf[,index, drop = FALSE]
+#' 
+#' # PCA
+#' result <- prcomp(applejuice_uf_selectedPeak)
+#' 
+#' # create color palette for x points
+#' require(RColorBrewer)
+#' xcol <- brewer.pal(3, "Dark2")
+#' biplot2(result, xlab = prcompname(result ,1), ylab = prcompname(result,2), 
+#' xlabs = country, xcol = xcol)
+#' 
 #' @export
 biplot2 <- function(x, ...) UseMethod("biplot2")
 
