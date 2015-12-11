@@ -1,3 +1,8 @@
+#' Calculate RPD score
+#' 
+#' Calculate RPD score
+#' 
+#' 
 #'@export
 #'
 calRPD <- function(rmse, y){
@@ -7,8 +12,8 @@ calRPD <- function(rmse, y){
 }
 
 #'@export
-calRPD2 <- function(model, ncomp, newx, newy){
-    rmse <- getRMSE(model, ncomp = ncomp, estimate = "test", newx = newx, newy = newy, showprint = FALSE)
+calRPD2 <- function(mvr, ncomp, newx, newy){
+    rmse <- getRMSE(mvr, ncomp = ncomp, estimate = "test", newx = newx, newy = newy, showprint = FALSE)
     y <- newy
     rpd <- calRPD(rmse, newy)
     return(rpd)
