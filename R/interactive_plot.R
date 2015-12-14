@@ -1,3 +1,4 @@
+## Since point picker is not working on filled.contour, this function will not work
 # data(applejuice)
 # n = 1
 # drawEEM(applejuice, n)

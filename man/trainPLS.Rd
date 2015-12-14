@@ -8,7 +8,19 @@ trainPLS(x, y, maxncomp = 20, cvsegments = 10, round = 2,
   reduceVar = FALSE, cycles = 1, fixedncomp = NULL)
 }
 \arguments{
+\item{x}{predictor matrix}
+
+\item{y}{prediction target vector}
+
+\item{maxncomp}{maximum ncomp for calculation}
+
 \item{cvsegments}{refer to mvrCv's segments argument}
+
+\item{round}{round numbers}
+
+\item{reduceVar}{variable reduction using VIP}
+
+\item{cycles}{cycles for variable reduction}
 
 \item{fixedncomp}{fixed numerical value}
 }

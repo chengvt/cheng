@@ -9,4 +9,7 @@ calRPD(rmse, y)
 \description{
 Calculate RPD score
 }
+\details{
+Calculate RPD score
+}
 

@@ -9,13 +9,26 @@ trainPLS2(x, y, newx = NULL, newy = NULL, maxncomp = 20,
   fixedncomp = NULL, prepro = c("mc", "norm_mc", "au"))
 }
 \arguments{
+\item{x}{predictor matrix}
+
+\item{y}{prediction target vector}
+
+\item{maxncomp}{maximum ncomp for calculation}
+
 \item{cvsegments}{refer to mvrCv's segments argument}
 
+\item{round}{round numbers}
+
+\item{reduceVar}{variable reduction using VIP}
+
+\item{cycles}{cycles for variable reduction}
+
 \item{fixedncomp}{fixed numerical value}
+
+\item{prepro}{preprocessing method. Choose from c("mc", "norm_mc","au"). Default to "mc" if not specified.}
 }
 \description{
-Train PLS for train dataset by cross-validation. The preprocessing method will be optimized automatically.
-However, the number of latent variables has to be determined manually. This is different from trainPLS as
+Train PLS for train dataset by cross-validation. This is different from trainPLS as
 you have to specify the preprocessing method manually.
 }
 

@@ -3,8 +3,15 @@
 #' Train PLS for train dataset by cross-validation. The preprocessing method will be optimized automatically.
 #' However, the number of latent variables has to be determined manually. Planning to add variable reduction in the future. 
 #' 
+#' @param x predictor matrix
+#' @param y prediction target vector
+#' @param maxncomp maximum ncomp for calculation
 #' @param cvsegments refer to mvrCv's segments argument
+#' @param round round numbers
+#' @param reduceVar variable reduction using VIP
+#' @param cycles cycles for variable reduction
 #' @param fixedncomp fixed numerical value
+#' 
 #' @import pls
 #' @export
 trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar = FALSE, 

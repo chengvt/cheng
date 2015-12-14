@@ -1,11 +1,18 @@
 #' Train PLS for train dataset by cross-validation
 #' 
-#' Train PLS for train dataset by cross-validation. The preprocessing method will be optimized automatically.
-#' However, the number of latent variables has to be determined manually. This is different from trainPLS as 
+#' Train PLS for train dataset by cross-validation. This is different from trainPLS as 
 #' you have to specify the preprocessing method manually.
 #' 
+#' @param x predictor matrix
+#' @param y prediction target vector
+#' @param maxncomp maximum ncomp for calculation
 #' @param cvsegments refer to mvrCv's segments argument
+#' @param round round numbers
+#' @param reduceVar variable reduction using VIP
+#' @param cycles cycles for variable reduction
 #' @param fixedncomp fixed numerical value
+#' @param prepro preprocessing method. Choose from c("mc", "norm_mc","au"). Default to "mc" if not specified.
+#' 
 #' @import pls
 #' @export
 trainPLS2 <- function(x, y, newx = NULL, newy = NULL, maxncomp = 20, cvsegments = 10, round = 2, reduceVar = TRUE, 

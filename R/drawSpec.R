@@ -1,5 +1,15 @@
 #' Draw spectra
 #' 
+#' Draw spectra
+#' 
+#' @param x unfolded EEM or EEM
+#' @param EX excitation wavelength
+#' @param EM emission wavelength
+#' @param group a vector of characters or factors
+#' @param ggplot logical value whether to use ggplot or not
+#' @param legendlocation legend location. can be anything from "bottomright", 
+#' "bottom", "bottomleft", "left", "topleft", "top", "topright", "right" or "center".
+#' 
 #' @examples 
 #' require(EEM)
 #' data(applejuice)
@@ -19,7 +29,16 @@
 #' @importFrom reshape2 melt
 #' 
 #' @export
-drawSpec <- function(EEM_uf, EX = NULL, EM = NULL, group = NULL, ggplot = TRUE,
+drawSpec <- function(x, ...) UseMethod("drawSpec")
+
+#' @export
+drawSpec.EEM <- function(x, ...){
+    x <- unfold(x)
+    drawSpec.matrix(x, ...)
+}
+
+#' @export
+drawSpec.matrix <- function(x, EX = NULL, EM = NULL, group = NULL, ggplot = TRUE,
                      legendlocation = "topright") {
     
     # one of EX of EM must be given
@@ -39,7 +58,7 @@ drawSpec <- function(EEM_uf, EX = NULL, EM = NULL, group = NULL, ggplot = TRUE,
     
     # if EX is specified
     if (!is.null(EX)){
-        idx <- grep(paste0("EX", EX), colnames(EEM_uf))
+        idx <- grep(paste0("EX", EX), colnames(x))
         xlab <- "Emission wavelength [nm]"
         title <- paste0("EX = ", EX, " nm")
         fixEX = TRUE
@@ -47,14 +66,14 @@ drawSpec <- function(EEM_uf, EX = NULL, EM = NULL, group = NULL, ggplot = TRUE,
     
     # if EM is specified
     if (!is.null(EM)){
-        idx <- grep(paste0("EM", EM), colnames(EEM_uf))
+        idx <- grep(paste0("EM", EM), colnames(x))
         xlab <- "Excitation wavelength [nm]"
         title <- paste0("EM = ", EM, " nm")
         fixEX = FALSE
     }
     
     # select data
-    EEM_selected <- EEM_uf[,idx, drop = FALSE]
+    EEM_selected <- x[,idx, drop = FALSE]
     
     # if ggplot is enabled, melt the data
     # turn it into data frame

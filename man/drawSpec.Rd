@@ -4,8 +4,21 @@
 \alias{drawSpec}
 \title{Draw spectra}
 \usage{
-drawSpec(EEM_uf, EX = NULL, EM = NULL, group = NULL, ggplot = TRUE,
-  legendlocation = "topright")
+drawSpec(x, ...)
+}
+\arguments{
+\item{x}{unfolded EEM or EEM}
+
+\item{EX}{excitation wavelength}
+
+\item{EM}{emission wavelength}
+
+\item{group}{a vector of characters or factors}
+
+\item{ggplot}{logical value whether to use ggplot or not}
+
+\item{legendlocation}{legend location. can be anything from "bottomright",
+"bottom", "bottomleft", "left", "topleft", "top", "topright", "right" or "center".}
 }
 \description{
 Draw spectra
