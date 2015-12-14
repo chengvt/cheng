@@ -122,7 +122,7 @@ drawSpec.matrix <- function(x, EX = NULL, EM = NULL, group = NULL, ggplot = TRUE
             rownames(data) <- as.numeric(getEX(rownames(data)))
         }
         if (hasGroup) col <- as.factor(group) else col <- 1
-        matplot(rownames(data), data, type = "l", xlab = xlab, ylab = "Intensity",
+        matplot(rownames(data), data, type = "l", lty = 1, xlab = xlab, ylab = "Intensity",
                 main = title, col = col)
         if (hasGroup) legend(legendlocation, legend = levels(as.factor(group)), 
                              col = 1:length(levels(as.factor(group))), lwd = 1)
