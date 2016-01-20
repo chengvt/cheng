@@ -7,14 +7,15 @@ Author: chengvt
 Maintainer: chengvt <vipavee.tri@gmail.com>
 Description: A package
 Imports:
-	pls,
-	RColorBrewer,
-	ggplot2,
-	reshape2,
-	dplyr,
-	car,
-	EEM,
-	hyperSpec,
-	R.utils,
-	colorRamps
+    pls,
+    RColorBrewer,
+    ggplot2,
+    reshape2,
+    dplyr,
+    car,
+    EEM,
+    hyperSpec,
+    R.utils,
+    colorRamps
 License: MIT
+RoxygenNote: 5.0.1
