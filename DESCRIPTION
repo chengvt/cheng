@@ -6,7 +6,7 @@ Date: 2015-07-16
 Author: chengvt
 Maintainer: chengvt <vipavee.tri@gmail.com>
 Description: A package
-Imports:
+Imports: 
     pls,
     RColorBrewer,
     ggplot2,
@@ -19,3 +19,6 @@ Imports:
     colorRamps
 License: MIT
 RoxygenNote: 5.0.1
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
