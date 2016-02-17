@@ -9,6 +9,8 @@ drawSpec(x, ...)
 \arguments{
 \item{x}{unfolded EEM or EEM}
 
+\item{...}{pass to geom_line}
+
 \item{EX}{excitation wavelength}
 
 \item{EM}{emission wavelength}

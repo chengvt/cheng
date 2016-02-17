@@ -9,6 +9,7 @@
 #' @param ggplot logical value whether to use ggplot or not
 #' @param legendlocation legend location. can be anything from "bottomright", 
 #' "bottom", "bottomleft", "left", "topleft", "top", "topright", "right" or "center".
+#' @param ... pass to geom_line
 #' 
 #' @examples 
 #' require(EEM)
@@ -39,7 +40,7 @@ drawSpec.EEM <- function(x, ...){
 
 #' @export
 drawSpec.matrix <- function(x, EX = NULL, EM = NULL, group = NULL, ggplot = TRUE,
-                     legendlocation = "topright") {
+                     legendlocation = "topright", ...) {
     
     # one of EX of EM must be given
     if (is.null(EX) & is.null(EM)) {
@@ -107,7 +108,7 @@ drawSpec.matrix <- function(x, EX = NULL, EM = NULL, group = NULL, ggplot = TRUE
         }
         
         p <- p + 
-            geom_line() + theme_bw() + 
+            geom_line(...) + theme_bw() + 
             ylab("intensity") + xlab(xlab) +
             theme(text = element_text(size = 18)) + 
             ggtitle(title)
