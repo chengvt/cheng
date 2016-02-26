@@ -2,8 +2,6 @@
 #' 
 #' Calculate RPD score
 #' 
-#' Calculate RPD score
-#' 
 #'@export
 #'
 calRPD <- function(rmse, y){

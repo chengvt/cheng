@@ -22,6 +22,7 @@
 #' plotVIP(model) 
 #'  
 #' @export
+#' @import EEM
 
 plotVIP <- function(x, ncomp = NULL, ...){
     

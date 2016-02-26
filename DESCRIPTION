@@ -2,23 +2,22 @@ Package: cheng
 Type: Package
 Title: A package
 Version: 0.1.0
-Date: 2015-07-16
+Date: 2016.02.26
 Author: chengvt
 Maintainer: chengvt <vipavee.tri@gmail.com>
 Description: A package
 Imports: 
     pls,
-    RColorBrewer,
     ggplot2,
     reshape2,
     dplyr,
     car,
-    EEM,
     hyperSpec,
     R.utils,
-    colorRamps
+    EEM
 License: MIT
 RoxygenNote: 5.0.1
-Suggests: knitr,
+Suggests: 
+    knitr,
     rmarkdown
 VignetteBuilder: knitr
