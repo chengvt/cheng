@@ -1,3 +1,6 @@
+#' Get VIP value from mvr class object
+#' 
+#' @param x mvr class object
 #' @export
 getVIP <- function(x) {
     

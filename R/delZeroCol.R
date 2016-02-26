@@ -14,6 +14,7 @@
 #' 
 #' @export
 delZeroCol <- function(uf){
-    uf_nozero <- uf[, no_zero_col(uf)]
+    nonzero_index <- which(!(colSums(abs(uf)) == 0))
+    uf_nozero <- uf[, nonzero_index]
     return(uf_nozero)
 }
