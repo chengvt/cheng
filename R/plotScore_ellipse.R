@@ -19,10 +19,14 @@
 #' plotScore_ellipse(PCA, fill = TRUE, 
 #' fill.alpha = 0.2, xlim = c(-9000, 9000), ylim = c(-4000, 4000))
 #' 
+#' # add labeling
+#' plotScore_ellipse(PCA, labels = names(applejuice))
+#' 
 #' 
 #' @importFrom car dataEllipse
 #' @export
-plotScore_ellipse <- function(PCA, x = 1, y = 2, level = 0.95, xlim = NULL, ylim = NULL, ...){
+plotScore_ellipse <- function(PCA, x = 1, y = 2, level = 0.95, xlim = NULL, ylim = NULL, 
+                              labels = NULL, ...){
     scores <- PCA$x
     if (is.null(xlim)) xlim <- c(min(scores[, x]), max(scores[, x]))  
     if (is.null(ylim)) ylim <- c(min(scores[, y]), max(scores[, y])) 
@@ -30,4 +34,7 @@ plotScore_ellipse <- function(PCA, x = 1, y = 2, level = 0.95, xlim = NULL, ylim
     dataEllipse(scores[, x], scores[, y], level = level, xlab = prcompname(PCA, x),
                 ylab = prcompname(PCA, y), cex.lab = 1.3, xlim = xlim, 
                 ylim = ylim, ...)
+    if (!is.null(labels)) {
+        text(scores[, x], scores[, y], labels = labels)
+        }
 }

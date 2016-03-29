@@ -5,7 +5,7 @@
 \title{Plot PCA scores with ellipse}
 \usage{
 plotScore_ellipse(PCA, x = 1, y = 2, level = 0.95, xlim = NULL,
-  ylim = NULL, ...)
+  ylim = NULL, labels = NULL, ...)
 }
 \description{
 Plot PCA scores with ellipse using \code{\link{dataEllipse}}
@@ -26,6 +26,9 @@ plotScore_ellipse(PCA, xlim = c(-9000, 9000), ylim = c(-4000, 4000))
 # fill in circles
 plotScore_ellipse(PCA, fill = TRUE, 
 fill.alpha = 0.2, xlim = c(-9000, 9000), ylim = c(-4000, 4000))
+
+# add labeling
+plotScore_ellipse(PCA, labels = names(applejuice))
 
 
 }
