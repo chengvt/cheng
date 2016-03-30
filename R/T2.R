@@ -1,7 +1,8 @@
 #' @export
 T2 <- function(prcomp, k){
     scores <- prcomp$x
-    lambda <- diag(prcomp$sdev[1:k]^2)
+    if (k == 1) { lambda <- prcomp$sdev[1:k]^2
+    } else lambda <- diag(prcomp$sdev[1:k]^2)
     
     T2 <- vector() #initialize
     for (i in 1:nrow(scores)){
