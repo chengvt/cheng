@@ -1,4 +1,4 @@
-#' Finding ncomp for pls model
+#' Finding ncomp for pls model (Uwadaira-san's yarikata)
 #' 
 #' Automatically determine ncomp from pls model after performing cross-validation
 #' 
@@ -11,7 +11,7 @@
 #' 
 #' @importFrom pls RMSEP
 #' @export
-find_ncomp <- function(plsmodel_cv, threshold = 0.05){
+find_ncomp2 <- function(plsmodel_cv, threshold = 0.02){
     
     # shorten variable name 
     model <- plsmodel_cv
@@ -24,13 +24,11 @@ find_ncomp <- function(plsmodel_cv, threshold = 0.05){
     if (which.min(RMSECV) == 1) {
         ncomp <- 1
     } else {
-        # (2) if the change in RMSECV becomes lesser than 5% of the previous ncomp
+        # (2) if the change in RMSECV becomes lesser than 2% of the previous ncomp
         i <- 2
-        change <- (RMSECV[i-1] - RMSECV[i]) / (RMSECV[1] - RMSECV[i])
-        while (change > threshold){
+        while ((RMSECV[i - 1] * threshold) < (RMSECV[i-1] - RMSECV[i])){
             i <- i + 1
             if (i > n) break
-            change <- (RMSECV[i-1] - RMSECV[i]) / (RMSECV[1] - RMSECV[i])
         }
         ncomp <- i - 1
     }

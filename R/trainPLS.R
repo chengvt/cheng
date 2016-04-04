@@ -10,25 +10,36 @@
 #' @param round round numbers
 #' @param reduceVar variable reduction using VIP
 #' @param cycles cycles for variable reduction
+#' @param ncomp `auto`,`manual` or `fixed`
 #' @param fixedncomp fixed numerical value
+#' @param threshold threshold for selecting ncomp
 #' 
 #' @import pls
 #' @export
 trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar = FALSE, 
-                     cycles = 1, fixedncomp = NULL){
-    
+                     cycles = 1, ncomp = c("auto", "manual", "fixed"), fixedncomp = NULL,
+                     threshold = 0.02){
+
     ## set up
     result_list <- list()
     model <- list() 
+    if (length(ncomp) == 3) ncomp <- "auto"
     
     ## creating a function to select ncomp and return statistical values from the model
     calStats <- function(model){
-        plot(model, ncomp = 1:maxncomp, plottype = "validation", type = "b", main = paste("Model", r), cex.lab = 1.3, ylab = "RMSECV", legendpos = "topright") 
-        # problem! gotta find a find-knee function for this to work. Let's do manual selection for now
-        cat("Model", r, ": ")
-        if (is.null(fixedncomp)) {
+        
+        ## selecting ncomp depending on each problem.
+        if (ncomp == "auto"){
+            ncomp <- find_ncomp2(model, threshold = threshold)
+        } else if (ncomp == "fixed"){
+            if (is.null(fixedncomp)) break
+            ncomp <- fixedncomp
+        } else {
+            plot(model, ncomp = 1:maxncomp, plottype = "validation", type = "b", main = paste("Model", r), cex.lab = 1.3, ylab = "RMSECV", legendpos = "topright") 
+            cat("Model", r, ": ")
             ncomp <- as.numeric(readline("Select ncomp: "))
-        } else ncomp <- fixedncomp
+        }
+        
         localresult <- data.frame(preprocessing = pre,                     
                                   nvar = dim(model$model[[2]])[2],                      
                                   ncomp = ncomp,                                         

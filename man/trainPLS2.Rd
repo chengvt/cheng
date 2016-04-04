@@ -6,7 +6,8 @@
 \usage{
 trainPLS2(x, y, newx = NULL, newy = NULL, maxncomp = 20,
   cvsegments = 10, round = 2, reduceVar = TRUE, cycles = 3,
-  fixedncomp = NULL, prepro = c("mc", "norm_mc", "au"))
+  ncomp = c("auto", "manual", "fixed"), fixedncomp = NULL,
+  prepro = c("mc", "norm_mc", "au"), threshold = 0.02)
 }
 \arguments{
 \item{x}{predictor matrix}
@@ -23,9 +24,13 @@ trainPLS2(x, y, newx = NULL, newy = NULL, maxncomp = 20,
 
 \item{cycles}{cycles for variable reduction}
 
+\item{ncomp}{`auto`,`manual` or `fixed`}
+
 \item{fixedncomp}{fixed numerical value}
 
 \item{prepro}{preprocessing method. Choose from c("mc", "norm_mc","au"). Default to "mc" if not specified.}
+
+\item{threshold}{threshold for selecting ncomp}
 }
 \description{
 Train PLS for train dataset by cross-validation. This is different from trainPLS as 

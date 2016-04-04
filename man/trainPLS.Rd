@@ -5,7 +5,8 @@
 \title{Train PLS for train dataset by cross-validation}
 \usage{
 trainPLS(x, y, maxncomp = 20, cvsegments = 10, round = 2,
-  reduceVar = FALSE, cycles = 1, fixedncomp = NULL)
+  reduceVar = FALSE, cycles = 1, ncomp = c("auto", "manual", "fixed"),
+  fixedncomp = NULL, threshold = 0.02)
 }
 \arguments{
 \item{x}{predictor matrix}
@@ -22,7 +23,11 @@ trainPLS(x, y, maxncomp = 20, cvsegments = 10, round = 2,
 
 \item{cycles}{cycles for variable reduction}
 
+\item{ncomp}{`auto`,`manual` or `fixed`}
+
 \item{fixedncomp}{fixed numerical value}
+
+\item{threshold}{threshold for selecting ncomp}
 }
 \description{
 Train PLS for train dataset by cross-validation. The preprocessing method will be optimized automatically.
