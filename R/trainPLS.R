@@ -18,7 +18,7 @@
 #' @export
 trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar = FALSE, 
                      cycles = 1, ncomp = c("auto", "manual", "fixed"), fixedncomp = NULL,
-                     threshold = 0.02){
+                     threshold = 0.02, saveModel = FALSE){
 
     ## set up
     result_list <- list()
@@ -116,7 +116,8 @@ trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar 
         }        
     }
     result <- do.call(rbind.data.frame, result_list)
-    print(result)
-    output <- list(result = result, model_list = model)
+    if (saveModel) output <- list(result = result, model_list = model) else {
+        output <- result
+    }
     return(output)
 }

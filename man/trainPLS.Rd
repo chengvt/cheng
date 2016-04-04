@@ -6,7 +6,7 @@
 \usage{
 trainPLS(x, y, maxncomp = 20, cvsegments = 10, round = 2,
   reduceVar = FALSE, cycles = 1, ncomp = c("auto", "manual", "fixed"),
-  fixedncomp = NULL, threshold = 0.02)
+  fixedncomp = NULL, threshold = 0.02, saveModel = FALSE)
 }
 \arguments{
 \item{x}{predictor matrix}

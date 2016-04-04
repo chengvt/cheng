@@ -7,7 +7,7 @@
 trainPLS2(x, y, newx = NULL, newy = NULL, maxncomp = 20,
   cvsegments = 10, round = 2, reduceVar = TRUE, cycles = 3,
   ncomp = c("auto", "manual", "fixed"), fixedncomp = NULL,
-  prepro = c("mc", "norm_mc", "au"), threshold = 0.02)
+  prepro = c("mc", "norm_mc", "au"), threshold = 0.02, saveModel = FALSE)
 }
 \arguments{
 \item{x}{predictor matrix}
