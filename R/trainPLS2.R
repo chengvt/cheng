@@ -27,6 +27,8 @@ trainPLS2 <- function(x, y, newx = NULL, newy = NULL, maxncomp = 20, cvsegments 
     if (length(prepro) == 3) prepro <- "mc"
     if ((!is.null(newx)) & (!is.null(newy))) newdata <- TRUE else newdata <- FALSE
     if (length(ncomp) == 3) ncomp <- "auto"
+    if (!is.matrix(x)) x <- as.matrix(x)
+    if (!is.matrix(y)) y <- as.matrix(y)
     
     ## creating a function to select ncomp and return statistical values from the model
     calStats <- function(model, newx, newy){
