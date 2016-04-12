@@ -40,15 +40,6 @@ library(cheng)
 
 # EEM-related functions
 
-## drawEEMgg: create normal contours for EEM and EEMweight objects
-`drawEEMgg` uses ggplot2 to create normal contours. Plan to move this to EEM package in the future. 
-
-```{r drawEEMgg}
-data(applejuice)
-drawEEMgg(applejuice, 1)
-
-```
-
 ## drawSpec: drawSpectra
 Select and draw excitation or emission spectra. This function should also go to EEM package in the future.
 
