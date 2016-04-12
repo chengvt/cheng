@@ -209,7 +209,7 @@ plsplot2(model, newx = yarn.val$NIR, newy = yarn.val$density, col.cal = "forestg
 ## trainPLS
 `trainPLS` can be used to train PLS for train dataset by cross-validation. The preprocessing method will be optimized automatically. However, the number of latent variables has to be determined manually. 
 
-```{r trainPLS, eval = FALSE}
+```{r trainPLS, fig.width=9, fig.height=7}
 # load data
 require(EEM)
 data(gluten)
@@ -220,8 +220,8 @@ gluten_uf <- gluten_uf[, index]
 gluten_ratio <- as.numeric(names(gluten))
 
 # build pls model using pls model
-require(pls)
-result <- trainPLS(x = gluten_uf, y = gluten_ratio)
+require(cheng)
+trainPLS(x = gluten_uf, y = gluten_ratio)
 ```
 The three preprocessing methods were applied automatically, namely,
 mean-center, normalize + mean-center and autoscale.
