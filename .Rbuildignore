@@ -4,6 +4,9 @@ readme.md
 ^/\.gitattributes$
 vignettes/*.html
 vignettes/rsconnect
+vignettes/custom.css
+vignettes/vignette.html
+vignettes/vignette.Rmd
 ^vignettes/*.md$
 ^vignettes/figure$
 ^vignettes/figure_file-io$
