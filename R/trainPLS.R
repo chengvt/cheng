@@ -24,13 +24,15 @@ trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar 
                      threshold = 0.02, saveModel = FALSE, plotting = TRUE){
 
     ## set up
+    x_varname <-  substitute(x)
+    y_varname <-  substitute(y)
     result_list <- list()
     model <- list() 
     if (length(ncomp) == 3) ncomp <- "auto"
     if (!is.matrix(x)) x <- as.matrix(x)
     if (!is.matrix(y)) y <- as.matrix(y)
     if (maxncomp > nrow(x)) maxncomp <- nrow(x) - 1
-    
+
     ## creating a function to select ncomp and return statistical values from the model
     calStats <- function(model){
         
@@ -135,7 +137,14 @@ trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar 
         best_model_ncomp <- result$ncomp[best_model_index]
         
         # plot layout
-        par(mfrow = c(2,2))
+        default_mar <- c(5, 4, 4, 2) + 0.1
+        layout(matrix(c(1,2,4,1,3,5),3,2), heights = c(1,6,6))
+        par(mar = c(0.5, 4.5, 0.5, 0.5))
+        frame()
+        title_text <- paste0("x: ",x_varname, " y: ", y_varname, "\nPreprocessing: ", 
+                             result$preprocessing[best_model_index])
+        mtext(title_text, side=3, outer=TRUE, line=-3) 
+        par(mar = default_mar)
         
         # 1st plot
         plot_ncomp(best_model, ncomp = best_model_ncomp, cex.lab = 1)
@@ -144,16 +153,15 @@ trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar 
         plsplot(best_model, ncomp = best_model_ncomp, estimate = "CV", cex.lab = 1)
         
         # 3rd plot
-        vp.BottomLeft <- viewport(height=unit(.5, "npc"), width=unit(0.5, "npc"), 
-                                  just=c("left","top"), 
-                                  y=0.5, x=0)
+        vp.BottomLeft <- grid::viewport(height=unit(0.4, "npc"), width=unit(0.5, "npc"), 
+                                  just=c("left","top"), y=0.45, x=0)
         p_VIP <- drawEEMgg(getVIP(best_model), ncomp = best_model_ncomp, textsize = 12)
         print(p_VIP,vp = vp.BottomLeft)
         
         # 4th plot
-        vp.BottomRight <- viewport(height=unit(.5, "npc"), width=unit(0.5, "npc"), 
+        vp.BottomRight <- grid::viewport(height=unit(0.4, "npc"), width=unit(0.5, "npc"), 
                                    just=c("left","top"), 
-                                   y=0.5, x=0.5)
+                                   y=0.45, x=0.5)
         p_Reg <- drawEEMgg(getReg(best_model), ncomp = best_model_ncomp, textsize = 12)
         print(p_Reg,vp = vp.BottomRight)
     }
