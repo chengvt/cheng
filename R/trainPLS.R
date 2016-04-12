@@ -15,10 +15,12 @@
 #' @param threshold threshold for selecting ncomp
 #' 
 #' @import pls
+#' @import gridGraphics
+#' @import gridExtra
 #' @export
 trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar = FALSE, 
                      cycles = 1, ncomp = c("auto", "manual", "fixed"), fixedncomp = NULL,
-                     threshold = 0.02, saveModel = FALSE){
+                     threshold = 0.02, saveModel = FALSE, plotting = TRUE){
 
     ## set up
     result_list <- list()
@@ -122,5 +124,38 @@ trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar 
     if (saveModel) output <- list(result = result, model_list = model) else {
         output <- result
     }
+    
+    # plot
+    if (plotting){
+
+        # find best model
+        best_model_index <- which.min(result$RMSECV)
+        best_model <- model[[best_model_index]]
+        best_model_ncomp <- result$ncomp[best_model_index]
+        
+        # plot layout
+        par(mfrow = c(2,2))
+        
+        # 1st plot
+        plot_ncomp(best_model, ncomp = best_model_ncomp, cex.lab = 1)
+        
+        # 2nd plot
+        plsplot(best_model, ncomp = best_model_ncomp, estimate = "CV", cex.lab = 1)
+        
+        # 3rd plot
+        vp.BottomLeft <- viewport(height=unit(.5, "npc"), width=unit(0.5, "npc"), 
+                                  just=c("left","top"), 
+                                  y=0.5, x=0)
+        p_VIP <- drawEEMgg(getVIP(best_model), ncomp = best_model_ncomp, textsize = 12)
+        print(p_VIP,vp = vp.BottomLeft)
+        
+        # 4th plot
+        vp.BottomRight <- viewport(height=unit(.5, "npc"), width=unit(0.5, "npc"), 
+                                   just=c("left","top"), 
+                                   y=0.5, x=0.5)
+        p_Reg <- drawEEMgg(getReg(best_model), ncomp = best_model_ncomp, textsize = 12)
+        print(p_Reg,vp = vp.BottomRight)
+    }
+    
     return(output)
 }
