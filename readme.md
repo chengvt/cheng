@@ -1,0 +1,1 @@
+See vignette [here](http://chengvt.github.io/cheng/vignettes/vignette.html)
