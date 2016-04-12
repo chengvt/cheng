@@ -157,7 +157,8 @@ trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar 
         # 3rd plot
         vp.BottomLeft <- grid::viewport(height=unit(0.4, "npc"), width=unit(0.5, "npc"), 
                                   just=c("left","top"), y=0.45, x=0)
-        p_VIP <- drawEEMgg(getVIP(best_model), ncomp = best_model_ncomp, textsize = 12)
+        p_VIP <- drawEEMgg(getVIP(best_model), ncomp = best_model_ncomp, textsize = 12, 
+                           zlim = c(1, max(getVIP(best_model)$value[,best_model_ncomp])))
         print(p_VIP,vp = vp.BottomLeft)
         
         # 4th plot
@@ -166,6 +167,9 @@ trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar 
                                    y=0.45, x=0.5)
         p_Reg <- drawEEMgg(getReg(best_model), ncomp = best_model_ncomp, textsize = 12)
         print(p_Reg,vp = vp.BottomRight)
+        
+        # reset layout
+        layout(matrix(1))
     }
     
     return(output)

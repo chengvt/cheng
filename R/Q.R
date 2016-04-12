@@ -12,4 +12,5 @@ Q <- function(prcomp, X, k){
     
     Q <- apply(Xcen, 1, Qi)
     return(Q)
+    # seems like the calculation is still wrong
 }
