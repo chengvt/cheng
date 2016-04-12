@@ -1,6 +1,6 @@
 ---
 title: Demonstation of cheng package
-date: edited on 2016.02.26 
+date: edited on 2016.04.12 
 author: Cheng
 output:
   html_document:
@@ -207,7 +207,7 @@ plsplot2(model, newx = yarn.val$NIR, newy = yarn.val$density, col.cal = "forestg
 ```
 
 ## trainPLS
-`trainPLS` can be used to train PLS for train dataset by cross-validation. The preprocessing method will be optimized automatically. However, the number of latent variables has to be determined manually. 
+`trainPLS` can be used to train PLS for train dataset by cross-validation. The preprocessing method will be optimized automatically from mean-center, normalize + mean-center and autoscale. However, the number of latent variables has to be determined manually. 
 
 ```{r trainPLS, fig.width=9, fig.height=7}
 # load data
@@ -223,8 +223,12 @@ gluten_ratio <- as.numeric(names(gluten))
 require(cheng)
 trainPLS(x = gluten_uf, y = gluten_ratio)
 ```
-The three preprocessing methods were applied automatically, namely,
-mean-center, normalize + mean-center and autoscale.
+
+if the number of componenents is too high, you can try increasing the threshold, which is default at 0.02
+
+```{r, fig.width=9, fig.height=7}
+trainPLS(x = gluten_uf, y = gluten_ratio, threshold = 0.1)
+```
 
 ## trainPLS2
 Train PLS for train dataset by cross-validation. This is different from trainPLS as 
