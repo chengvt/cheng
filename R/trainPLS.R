@@ -18,6 +18,7 @@
 #' @import gridGraphics
 #' @import gridExtra
 #' @import grid
+#' 
 #' @export
 trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar = FALSE, 
                      cycles = 1, ncomp = c("auto", "manual", "fixed"), fixedncomp = NULL,
@@ -141,7 +142,8 @@ trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar 
         layout(matrix(c(1,2,4,1,3,5),3,2), heights = c(1,6,6))
         par(mar = c(0.5, 4.5, 0.5, 0.5))
         frame()
-        title_text <- paste0("x: ",x_varname, " y: ", y_varname, "\nPreprocessing: ", 
+        title_text <- paste0("x: ",x_varname, " (nvar=", result$nvar[best_model_index], ") y: ", 
+                             y_varname, "\nPreprocessing: ", 
                              result$preprocessing[best_model_index])
         mtext(title_text, side=3, outer=TRUE, line=-3) 
         par(mar = default_mar)
