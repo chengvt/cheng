@@ -17,6 +17,7 @@
 #' @import pls
 #' @import gridGraphics
 #' @import gridExtra
+#' @import grid
 #' @export
 trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar = FALSE, 
                      cycles = 1, ncomp = c("auto", "manual", "fixed"), fixedncomp = NULL,

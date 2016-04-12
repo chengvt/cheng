@@ -14,7 +14,10 @@ Imports:
     car,
     hyperSpec,
     R.utils,
-    EEM
+    EEM,
+    grid,
+    gridGraphics,
+    gridExtra
 License: MIT
 RoxygenNote: 5.0.1
 Suggests: 
