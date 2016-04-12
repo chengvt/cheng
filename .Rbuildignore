@@ -10,3 +10,4 @@ vignettes/vignette.Rmd
 ^vignettes/*.md$
 ^vignettes/figure$
 ^vignettes/figure_file-io$
+note.txt
