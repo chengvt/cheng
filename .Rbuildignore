@@ -1,5 +1,9 @@
 .gitignore
 .Rhistory
+readme.md
 ^/\.gitattributes$
 vignettes/*.html
 vignettes/rsconnect
+^vignettes/*.md$
+^vignettes/figure$
+^vignettes/figure_file-io$
