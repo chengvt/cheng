@@ -15,9 +15,10 @@
 #' @param threshold threshold for selecting ncomp
 #' 
 #' @import pls
-#' @import gridGraphics
-#' @import gridExtra
-#' @import grid
+# @import gridGraphics
+# @import gridExtra
+#' @importFrom grid viewport
+#' @import EEM
 #' 
 #' @export
 trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar = FALSE, 
@@ -157,7 +158,7 @@ trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar 
         # 3rd plot
         vp.BottomLeft <- grid::viewport(height=unit(0.4, "npc"), width=unit(0.5, "npc"), 
                                   just=c("left","top"), y=0.45, x=0)
-        p_VIP <- drawEEMgg(getVIP(best_model), ncomp = best_model_ncomp, textsize = 12, 
+        p_VIP <- EEM::drawEEMgg(getVIP(best_model), ncomp = best_model_ncomp, textsize = 12, 
                            zlim = c(1, max(getVIP(best_model)$value[,best_model_ncomp])))
         print(p_VIP,vp = vp.BottomLeft)
         
@@ -165,7 +166,7 @@ trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar 
         vp.BottomRight <- grid::viewport(height=unit(0.4, "npc"), width=unit(0.5, "npc"), 
                                    just=c("left","top"), 
                                    y=0.45, x=0.5)
-        p_Reg <- drawEEMgg(getReg(best_model), ncomp = best_model_ncomp, textsize = 12)
+        p_Reg <- EEM::drawEEMgg(getReg(best_model), ncomp = best_model_ncomp, textsize = 12)
         print(p_Reg,vp = vp.BottomRight)
         
         # reset layout

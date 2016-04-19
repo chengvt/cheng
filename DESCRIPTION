@@ -2,7 +2,7 @@ Package: cheng
 Type: Package
 Title: A package
 Version: 0.1.0
-Date: 2016.02.26
+Date: 2016.04.19
 Author: chengvt
 Maintainer: chengvt <vipavee.tri@gmail.com>
 Description: A package
@@ -18,7 +18,9 @@ Imports:
     grid,
     gridGraphics,
     gridExtra
-License: MIT
+Suggests:
+    EEM
+License: MIT + file LICENSE
 RoxygenNote: 5.0.1
 Suggests: 
     knitr,

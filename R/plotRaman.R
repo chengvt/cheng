@@ -21,7 +21,7 @@
 #' cultivar <- getText(rownames(raman), 2)
 #' plotRaman(raman, group = cultivar)
 #'
-#' @import hyperSpec
+#' @importFrom hyperSpec plotspc 
 #' @export
 
 plotRaman <- function(data, group = NULL, legendlocation = "topright", 

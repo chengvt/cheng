@@ -20,6 +20,7 @@ A figure is returned on the graphic device
 Plot VIP for EEM data
 }
 \examples{
+require(EEM)
 data(gluten)
 gluten_uf <- unfold(gluten) # unfold list into matrix
 

@@ -14,10 +14,6 @@ output:
     fig_height: 3.5
     fig_width: 5
 ---
-<!--
-%\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{Demonstration of cheng package}
--->
 
 ```{r setup, echo=FALSE, warning=FALSE, message = FALSE}
 require(knitr)

@@ -9,6 +9,7 @@
 #' @return A figure is returned on the graphic device
 #' 
 #' @examples
+#' require(EEM)
 #' data(gluten)
 #' gluten_uf <- unfold(gluten) # unfold list into matrix
 #' 

@@ -10,7 +10,6 @@
 #' # data[1:5,1:5]
 #' 
 #' @importFrom R.utils isDirectory isFile
-#' @import hyperSpec
 #' @export
 readRaman <- function(path, hyperSpec = FALSE){
     
