@@ -11,7 +11,7 @@ deflate(x, n, ...)
 \method{deflate}{matrix}(x, n, process = "average", sdigits = 2,
   rowname = NULL)
 
-\method{deflate}{character}(x, n, FUN, ...)
+\method{deflate}{character}(x, n, FUN = NULL, ...)
 }
 \arguments{
 \item{x}{object}
@@ -23,6 +23,8 @@ deflate(x, n, ...)
 \item{process}{processing method. Available option: none, average, std}
 
 \item{sdigits}{significant figures}
+
+\item{rowname}{rownames for the output}
 
 \item{FUN}{function}
 }

@@ -8,6 +8,7 @@
 #' @param sdigits significant figures
 #' @param FUN function
 #' @param ... arguments to pass to function
+#' @param rowname rownames for the output
 #' @export
 
 deflate <- function(x, n, ...){
@@ -42,6 +43,7 @@ deflate.matrix <- function(x, n, process = "average", sdigits = 2, rowname = NUL
     
     # transfer names
     colnames(y_round) <- colnames(x)
+    if (is.null(rowname)) rowname <- deflate(rownames(x), n)
     rownames(y_round) <- rowname
     return(y_round)
 
@@ -49,7 +51,7 @@ deflate.matrix <- function(x, n, process = "average", sdigits = 2, rowname = NUL
 
 #' @describeIn deflate for character
 #' @export
-deflate.character <- function(x, n, FUN, ...){
+deflate.character <- function(x, n, FUN = NULL, ...){
     
     # retrieve size of x
     I <- length(x)
@@ -59,6 +61,6 @@ deflate.character <- function(x, n, FUN, ...){
     for (i in 1:k) {
         y[i] <- x[n*(i-1)+1]
     }
-    y <- FUN(y, ...)
+    if (!is.null(FUN)) y <- FUN(y, ...)
     return(y)
 }
