@@ -11,10 +11,10 @@ pre:not([class]) {
   overflow:auto;
 }
 
-body {
+/*body {
   max-width: 800px;
   margin: auto;
   margin-left:410px;
   line-height: 20px;
-}
+} *\
 

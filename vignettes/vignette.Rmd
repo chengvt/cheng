@@ -1,7 +1,7 @@
 ---
 title: Demonstation of cheng package
-date: edited on 2016.04.12 
-author: Cheng
+date: edited on 2016.05.16 
+author: chengvt
 output:
   html_document:
     css: custom.css
@@ -9,7 +9,8 @@ output:
     fig_width: 6.5
     highlight: zenburn
     theme: flatly
-    toc: True
+    toc: true
+    toc_float: true
   pdf_document:
     fig_height: 3.5
     fig_width: 5
