@@ -23,8 +23,9 @@
 getR2 <- function(mvr, ncomp = mvr$ncomp, estimate, newx = NULL, newy = NULL, showprint = TRUE){
     if (estimate %in% "test"){
         predicted <- drop(predict(mvr, ncomp, newdata = newx))
-        fit <- lm(predicted ~ newy)
-        R2 <- summary(fit)$r.squared
+        SST <- sum((newy - mean(newy))^2)
+        SSE <- sum((predicted - newy)^2)
+        R2 <- 1 - (SSE/SST)
     } else {
         R2 <- R2(mvr, estimate = estimate)$val[1,1,ncomp+1]   
     }
