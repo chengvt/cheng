@@ -27,9 +27,13 @@ addStats <- function(model, ncomp = model$ncomp,
     ## get stats
     if (estimate %in% "test"){
         predicted <- drop(predict(model, ncomp, newdata = newx))
+        fit <- lm(predicted ~ newy)
+        
+        # calculate R2P
         SST <- sum((newy - mean(newy))^2)
         SSE <- sum((predicted - newy)^2)
         R2 <- 1 - (SSE/SST)
+        
         RMSE <- sqrt(sum((predicted - newy) ^ 2) / length(predicted))
         RPD <- sd(newy) / RMSE
     } else {
