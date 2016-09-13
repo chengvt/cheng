@@ -14,6 +14,19 @@
 #' @param fixedncomp fixed numerical value
 #' @param threshold threshold for selecting ncomp
 #' 
+#' @examples 
+#' library(EEM)
+#' data(gluten)
+#' gluten_uf <- unfold(gluten) # unfold list into matrix
+#' 
+#' # delete columns with NA values
+#' index <- colSums(is.na(gluten_uf)) == 0
+#' gluten_uf <- gluten_uf[, index]
+#' gluten_ratio <- as.numeric(names(gluten))
+#' 
+#' result <- trainPLS(gluten_uf, gluten_ratio) 
+#' result
+#' 
 #' @import pls
 # @import gridGraphics
 # @import gridExtra
@@ -23,7 +36,7 @@
 #' @export
 trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar = FALSE, 
                      cycles = 1, ncomp = c("auto", "manual", "fixed"), fixedncomp = NULL,
-                     threshold = 0.02, saveModel = FALSE, plotting = TRUE){
+                     threshold = 0.02, saveAllModel = FALSE, plotting = TRUE){
 
     ## set up
     x_varname <-  substitute(x)
@@ -126,17 +139,23 @@ trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar 
         }        
     }
     result <- do.call(rbind.data.frame, result_list)
-    if (saveModel) output <- list(result = result, model_list = model) else {
-        output <- result
+    
+    # find best model
+    best_model_index <- which.max(result$R2CV)
+    best_model <- model[[best_model_index]]
+    best_model_ncomp <- result$ncomp[best_model_index]
+    
+    if (saveAllModel) {
+      output <- list(result = result, bestmodel = best_model, bestmodel_ncomp = best_model_ncomp, 
+                     bestmodel_pre = as.character(result$preprocessing[best_model_index]))
+      }
+    else {
+      output <- list(result = result, bestmodel = best_model, bestmodel_ncomp = best_model_ncomp, 
+                     bestmodel_pre = as.character(result$preprocessing[best_model_index]), model_list = model) 
     }
     
     # plot
     if (plotting){
-
-        # find best model
-        best_model_index <- which.min(result$RMSECV)
-        best_model <- model[[best_model_index]]
-        best_model_ncomp <- result$ncomp[best_model_index]
         
         # plot layout
         default_mar <- c(5, 4, 4, 2) + 0.1
@@ -172,6 +191,9 @@ trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar 
         # reset layout
         layout(matrix(1))
     }
+    
+    # add trainPLS class 
+    class(output) <- c("trainPLS", class(output))
     
     return(output)
 }

@@ -18,7 +18,7 @@
 # @import EEM
 #' 
 #' @export
-trainPLS_general <- function(x, y, maxncomp = 20, cvsegments = 10,
+trainPLS_general <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2,
                            ncomp = c("auto", "manual", "fixed"), fixedncomp = NULL,
                            threshold = 0.02, saveModel = FALSE, plotting = TRUE){
   
@@ -84,7 +84,7 @@ trainPLS_general <- function(x, y, maxncomp = 20, cvsegments = 10,
   }
   
   # plot
-  if (plotting){
+  if (plotting){ ## error now. solve this later
     
     # find best model
     best_model_index <- which.min(result$RMSECV)

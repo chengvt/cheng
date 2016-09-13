@@ -6,7 +6,7 @@
 \usage{
 trainPLS(x, y, maxncomp = 20, cvsegments = 10, round = 2,
   reduceVar = FALSE, cycles = 1, ncomp = c("auto", "manual", "fixed"),
-  fixedncomp = NULL, threshold = 0.02, saveModel = FALSE,
+  fixedncomp = NULL, threshold = 0.02, saveAllModel = FALSE,
   plotting = TRUE)
 }
 \arguments{
@@ -33,5 +33,19 @@ trainPLS(x, y, maxncomp = 20, cvsegments = 10, round = 2,
 \description{
 Train PLS for train dataset by cross-validation. The preprocessing method will be optimized automatically.
 However, the number of latent variables has to be determined manually. Planning to add variable reduction in the future.
+}
+\examples{
+library(EEM)
+data(gluten)
+gluten_uf <- unfold(gluten) # unfold list into matrix
+
+# delete columns with NA values
+index <- colSums(is.na(gluten_uf)) == 0
+gluten_uf <- gluten_uf[, index]
+gluten_ratio <- as.numeric(names(gluten))
+
+result <- trainPLS(gluten_uf, gluten_ratio) 
+result
+
 }
 
