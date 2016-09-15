@@ -40,18 +40,23 @@
 #' 
 #' @export
 #' @import pls
-plsplot2 <- function(mvr, newx = NULL, newy = NULL, ncomp = mvr$ncomp, 
+
+plsplot2 <- function(x, ...) UseMethod("plsplot2", x)
+
+#' @export
+plsplot2.mvr <- function(object, newx, newy, ncomp = object$ncomp, 
                      location = "bottomright", show = c("ncomp", "R2", "RMSE"),
                      round = 2, fitline = TRUE, cex.pt = 1.5, cex.stats = 1, 
                      xlab = "Measured value", ylab = "Predicted value",
                      col.cal = "black", col.val = "grey", 
-                     pch.cal = 21, pch.val = 21, ...){
+                     pch.cal = 21, pch.val = 21, train_label = NULL, 
+                     test_label = NULL, label_pos = 4, ...){
     
     # get values
-    y.cal.m <- mvr$model[[1]]
-    y.cal.p <- predict(mvr, ncomp = ncomp)
+    y.cal.m <- object$model[[1]]
+    y.cal.p <- predict(object, ncomp = ncomp)
     y.val.m <- newy
-    y.val.p <- drop(predict(mvr, newdata = newx, ncomp = ncomp))
+    y.val.p <- drop(predict(object, newdata = newx, ncomp = ncomp))
     
     # blank plot
     plot(x = c(y.cal.m, y.val.m), y = c(y.cal.p, y.val.p), type = "n", xlab = xlab, ylab = ylab, ...)
@@ -63,13 +68,70 @@ plsplot2 <- function(mvr, newx = NULL, newy = NULL, ncomp = mvr$ncomp,
     points(y.val.m, y.val.p, pch = pch.val, col = "black", bg = col.val, cex = cex.pt)
     
     # add stats
-    addStats(mvr, ncomp = ncomp, 
+    addStats(object, ncomp = ncomp, 
              estimate = "test", location = location,
              show = show, round = round, newx = newx, 
              newy = newy, fitline = fitline, cex = cex.stats)
     
+    # add text
+    if (!is.null(train_label)) text(y.cal.m, y.cal.p, labels = train_label, pos = label_pos)
+    if (!is.null(test_label)) text(y.val.m, y.val.p, labels = test_label, pos = label_pos)
+    
     # add legend
     legend("topleft", legend = c("Calibration", "Validation"), 
            pch = c(pch.cal, pch.val), col = "black", pt.bg = c(col.cal, col.val), pt.cex = cex.pt)
-    
+}
+
+#' @export
+plsplot2.trainPLS <- function(object, newx, newy, 
+                         location = "bottomright", show = c("ncomp", "R2", "RMSE"),
+                         round = 2, fitline = TRUE, cex.pt = 1.5, cex.stats = 1, 
+                         xlab = "Measured value", ylab = "Predicted value",
+                         col.cal = "black", col.val = "grey", 
+                         pch.cal = 21, pch.val = 21, train_label = NULL, 
+                         test_label = NULL, label_pos = 4, ...){
+  
+  # set-up
+  ncomp <- object$bestmodel_ncomp
+  
+  # get values
+  y.cal.m <- object$bestmodel$model[[1]]
+  y.cal.p <- predict(object$bestmodel, ncomp = ncomp)
+  y.val.m <- newy
+  
+  # preprocess newx
+  newx <- as.matrix(newx)
+  if (object$bestmodel_pre == "Norm + Mean-centering") {
+    newx <- normalize(newx)
+  } else if (object$bestmodel_pre == "Autoscale") {
+    index <- which(colSums(newx) == 0)
+    if (length(index) == 0) newx <- newx else newx <- newx[,-index]
+  }
+  
+  # predict newy
+  y.val.p <- drop(predict(object$bestmodel, ncomp = ncomp, newdata = newx))
+  
+  # blank plot
+  plot(x = c(y.cal.m, y.val.m), y = c(y.cal.p, y.val.p), type = "n", xlab = xlab, ylab = ylab, ...)
+  
+  # calibration
+  points(y.cal.m, y.cal.p, pch = pch.cal, col = "black", bg = col.cal, cex = cex.pt)
+  
+  # validation
+  points(y.val.m, y.val.p, pch = pch.val, col = "black", bg = col.val, cex = cex.pt)
+  
+  # add stats
+  addStats(object$bestmodel, ncomp = ncomp, 
+           estimate = "test", location = location,
+           show = show, round = round, newx = newx, 
+           newy = newy, fitline = fitline, cex = cex.stats)
+  
+  # add text
+  if (!is.null(train_label)) text(y.cal.m, y.cal.p, labels = train_label, pos = label_pos)
+  if (!is.null(test_label)) text(y.val.m, y.vals.p, labels = test_label, pos = label_pos)
+  
+  # add legend
+  legend("topleft", legend = c("Calibration", "Validation"), 
+         pch = c(pch.cal, pch.val), col = "black", pt.bg = c(col.cal, col.val), pt.cex = cex.pt)
+  
 }

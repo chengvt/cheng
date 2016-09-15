@@ -4,18 +4,12 @@
 \alias{plsplot2}
 \title{Plot pls results for both calibration and validation groups}
 \usage{
-plsplot2(mvr, newx = NULL, newy = NULL, ncomp = mvr$ncomp,
-  location = "bottomright", show = c("ncomp", "R2", "RMSE"), round = 2,
-  fitline = TRUE, cex.pt = 1.5, cex.stats = 1, xlab = "Measured value",
-  ylab = "Predicted value", col.cal = "black", col.val = "grey",
-  pch.cal = 21, pch.val = 21, ...)
+plsplot2(x, ...)
 }
 \arguments{
+\item{...}{pass on to plot}
+
 \item{mvr}{mvr object}
-
-\item{newx}{newx}
-
-\item{newy}{newy}
 
 \item{ncomp}{number of component}
 
@@ -25,11 +19,15 @@ plsplot2(mvr, newx = NULL, newy = NULL, ncomp = mvr$ncomp,
 
 \item{round}{digits to round}
 
+\item{newx}{newx}
+
+\item{newy}{newy}
+
 \item{fitline}{add fitline or not}
 
-\item{cex.pt}{point size}
-
 \item{cex.stats}{text size of statistics legend}
+
+\item{cex.pt}{point size}
 
 \item{xlab}{x-axis label}
 
@@ -42,8 +40,6 @@ plsplot2(mvr, newx = NULL, newy = NULL, ncomp = mvr$ncomp,
 \item{pch.cal}{pch for calibration group}
 
 \item{pch.val}{pch for validation group}
-
-\item{...}{pass on to plot}
 }
 \description{
 Plot pls results for both calibration and validation groups on the same graph.

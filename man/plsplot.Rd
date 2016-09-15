@@ -4,11 +4,11 @@
 \alias{plsplot}
 \title{Plot prediction graph for mvr model}
 \usage{
-plsplot(mvr, ncomp = mvr$ncomp, estimate = "train",
-  location = "bottomright", show = c("ncomp", "R2", "RMSE"), round = 2,
-  newx = NULL, newy = NULL, fitline = TRUE, cex.stats = 1, ...)
+plsplot(x, ...)
 }
 \arguments{
+\item{...}{pass on to predplot}
+
 \item{mvr}{mvr object (pls model)}
 
 \item{ncomp}{number of component}
@@ -26,8 +26,6 @@ plsplot(mvr, ncomp = mvr$ncomp, estimate = "train",
 \item{fitline}{add fitline or not}
 
 \item{cex.stats}{text size of statistics legend}
-
-\item{...}{pass on to predplot}
 }
 \description{
 Plot prediction graph using pls package's `predplot` function but with ability 
@@ -47,7 +45,6 @@ plsplot(model, show = "R2", round = 4) # round to four digits
 plsplot(model, fitline = FALSE) # get rid of fitline
 plsplot(model, show = "R2", cex.stats = 3) # bigger stats font
 plsplot(model, cex.lab = 1.5, cex.main = 2) # bigger labels font
-
 
 }
 

@@ -29,10 +29,12 @@
 #' plsplot(model, show = "R2", cex.stats = 3) # bigger stats font
 #' plsplot(model, cex.lab = 1.5, cex.main = 2) # bigger labels font
 #' 
-#' 
 #' @export
 #' @import pls
-plsplot <- function(mvr, ncomp = mvr$ncomp, 
+plsplot <- function(x, ...) UseMethod("plsplot", x)
+
+#' @export
+plsplot.mvr <- function(object, ncomp = object$ncomp, 
                     estimate = "train",
                     location = "bottomright",
                     show = c("ncomp", "R2", "RMSE"),
@@ -40,24 +42,68 @@ plsplot <- function(mvr, ncomp = mvr$ncomp,
                     fitline = TRUE, cex.stats = 1, ...){
     if (!(is.null(newx) & is.null(newy))) estimate = "test"
     if (estimate %in% "train"){
-        predplot(mvr, ncomp = ncomp, which = estimate, ...)
-        addStats(mvr, ncomp = ncomp, 
+        predplot(object, ncomp = ncomp, which = estimate, ...)
+        addStats(object, ncomp = ncomp, 
                  estimate = estimate, location = location,
                  show = show, round = round, newx = newx, 
                  newy = newy, fitline = fitline, cex = cex.stats)
     } else if (estimate %in% "CV"){
-        predplot(mvr, ncomp = ncomp, which = "validation", ...)
-        addStats(mvr, ncomp = ncomp, 
+        predplot(object, ncomp = ncomp, which = "validation", ...)
+        addStats(object, ncomp = ncomp, 
                  estimate = estimate, location = location,
                  show = show, round = round, newx = newx, 
                  newy = newy, fitline = fitline, cex = cex.stats)
     } else if (estimate %in% "test"){
-        predicted <- drop(predict(mvr, ncomp, newdata = newx))
+        predicted <- drop(predict(object, ncomp, newdata = newx))
         plot(newy, predicted, ...)
-        addStats(mvr, ncomp = ncomp, 
+        addStats(object, ncomp = ncomp, 
                  estimate = estimate, location = location,
                  show = show, round = round, newx = newx, 
                  newy = newy, fitline = fitline, cex = cex.stats)
     }
+}
+
+#' @export
+plsplot.trainPLS <- function(object, 
+                        estimate = "train",
+                        location = "bottomright",
+                        show = c("ncomp", "R2", "RMSE"),
+                        round = 2, newx = NULL, newy = NULL,
+                        fitline = TRUE, cex.stats = 1, ...){
+  # set-up
+  ncomp <- object$bestmodel_ncomp
+  
+  if (!(is.null(newx) & is.null(newy))) estimate = "test"
+  if (estimate %in% "train"){
+    predplot(object$bestmodel, ncomp = ncomp, which = estimate, ...)
+    addStats(object$bestmodel, ncomp = ncomp, 
+             estimate = estimate, location = location,
+             show = show, round = round, newx = newx, 
+             newy = newy, fitline = fitline, cex = cex.stats)
+  } else if (estimate %in% "CV"){
+    predplot(object$bestmodel, ncomp = ncomp, which = "validation", ...)
+    addStats(object$bestmodel, ncomp = ncomp, 
+             estimate = estimate, location = location,
+             show = show, round = round, newx = newx, 
+             newy = newy, fitline = fitline, cex = cex.stats)
+  } else if (estimate %in% "test"){
     
+    # preprocess newx
+    newx <- as.matrix(newx)
+    if (object$bestmodel_pre == "Norm + Mean-centering") {
+      newx <- normalize(newx)
+    } else if (object$bestmodel_pre == "Autoscale") {
+      index <- which(colSums(newx) == 0)
+      if (length(index) == 0) newx <- newx else newx <- newx[,-index]
+    }
+    
+    # predict newy
+    predicted <- drop(predict(object$bestmodel, ncomp = ncomp, newdata = newx))
+    
+    plot(newy, predicted, ...)
+    addStats(object$bestmodel, ncomp = ncomp, 
+             estimate = estimate, location = location,
+             show = show, round = round, newx = newx, 
+             newy = newy, fitline = fitline, cex = cex.stats)
+  }
 }
