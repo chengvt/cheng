@@ -18,7 +18,7 @@ predict.trainPLS <- function(object, newx, ...){
   }
   
   # predict newy
-  newy <- predict(object$bestmodel, ncomp = object$bestmodel_ncomp)[,1,1]
+  newy <- predict(object$bestmodel, ncomp = object$bestmodel_ncomp, newdata = x)[,1,1]
   
   return(newy)
   
