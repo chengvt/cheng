@@ -128,7 +128,7 @@ plsplot2.trainPLS <- function(object, newx, newy,
   
   # add text
   if (!is.null(train_label)) text(y.cal.m, y.cal.p, labels = train_label, pos = label_pos)
-  if (!is.null(test_label)) text(y.val.m, y.vals.p, labels = test_label, pos = label_pos)
+  if (!is.null(test_label)) text(y.val.m, y.val.p, labels = test_label, pos = label_pos)
   
   # add legend
   legend("topleft", legend = c("Calibration", "Validation"), 
