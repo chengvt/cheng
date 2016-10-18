@@ -147,11 +147,11 @@ trainPLS <- function(x, y, maxncomp = 20, cvsegments = 10, round = 2, reduceVar 
     
     if (saveAllModel) {
       output <- list(result = result, bestmodel = best_model, bestmodel_ncomp = best_model_ncomp, 
-                     bestmodel_pre = as.character(result$preprocessing[best_model_index]))
+                     bestmodel_pre = as.character(result$preprocessing[best_model_index]), model_list = model)
       }
     else {
       output <- list(result = result, bestmodel = best_model, bestmodel_ncomp = best_model_ncomp, 
-                     bestmodel_pre = as.character(result$preprocessing[best_model_index]), model_list = model) 
+                     bestmodel_pre = as.character(result$preprocessing[best_model_index])) 
     }
     
     # plot
