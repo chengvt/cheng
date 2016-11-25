@@ -4,7 +4,7 @@
 \alias{SR}
 \title{Calculate SR from mvr}
 \usage{
-SR(mvr, ncomp = mvr$ncomp)
+SR(mvr)
 }
 \arguments{
 \item{mvr}{pls model from pls package}
@@ -12,7 +12,7 @@ SR(mvr, ncomp = mvr$ncomp)
 \item{ncomp}{ncomp}
 }
 \description{
-Mostly edited and made to work by Y. Uwadaira of \code{plsropt} package. 
+Mostly edited and made to work by Y. Uwadaira of \code{plsropt} package.
 Validated with the values from MATLAB's PLS toolbox v8.1.1.
 }
 
