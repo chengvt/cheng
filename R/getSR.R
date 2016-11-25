@@ -6,8 +6,8 @@ getSR <- function(x) {
     
     # extract information
     if (class(x) == "mvr") {
-        value <- SR(x)
-        title <- "VIP"
+        value <- t(SR(x))
+        title <- "SR"
         ncomp <- x$ncomp
     } else {
         stop('Input class not supported.')
