@@ -6,7 +6,7 @@ Date: 2016.07.06
 Author: Vipavee Trivittayasil (chengvt)
 Maintainer: Vipavee Trivittayasil <vipavee.tri@gmail.com>
 Description: Personal package for misc R functions
-Imports: 
+Depends:
     pls,
     ggplot2,
     reshape2,
